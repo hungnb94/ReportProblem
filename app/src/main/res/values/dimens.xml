@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_text">30dp</dimen>
+    <dimen name="size_report">20sp</dimen>
+    <dimen name="margin_report">10dp</dimen>
+    <dimen name="magin_layout">15dp</dimen>
+    <dimen name="title_fragment">25sp</dimen>
+    <dimen name="size_medium">25sp</dimen>
+    <dimen name="height_problem">250dp</dimen>
+</resources>
