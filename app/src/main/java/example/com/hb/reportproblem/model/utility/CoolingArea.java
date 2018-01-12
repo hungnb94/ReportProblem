@@ -27,22 +27,22 @@ public class CoolingArea implements INode, ISimpleNode {
 //    Các bể đầu ra
 //    Biogas
 
-    CO2Area.ControlAndElectricSystem controlAndElectricSystem;
-    HeThongTienXuLyNuocThai heThongTienXuLyNuocThai;
-    UASB uasb;
-    SBR sbr;
-    HeThongCacBebun heThongCacBebun;
-    StirrerTank stirrerTank;
-    MBBR mbbr;
-    HeThongBeKiKhi heThongBeKiKhi;
-    BOPits boPits;
-    AnoxicTank anoxicTank;
-    CoagulationTank coagulationTank;
-    SandFilters sandFilters;
-    SedimentationTank sedimentationTank;
-    ChemicalSystem chemicalSystem;
-    CacBeDauRa cacBeDauRa;
-    Biogas biogas;
+    CO2Area.ControlAndElectricSystem controlAndElectricSystem = new CO2Area.ControlAndElectricSystem();
+    HeThongTienXuLyNuocThai heThongTienXuLyNuocThai = new HeThongTienXuLyNuocThai();
+    UASB uasb = new UASB();
+    SBR sbr = new SBR();
+    HeThongCacBebun heThongCacBebun = new HeThongCacBebun();
+    StirrerTank stirrerTank = new StirrerTank();
+    MBBR mbbr = new MBBR();
+    HeThongBeKiKhi heThongBeKiKhi = new HeThongBeKiKhi();
+    BOPits boPits = new BOPits();
+    AnoxicTank anoxicTank = new AnoxicTank();
+    CoagulationTank coagulationTank = new CoagulationTank();
+    SandFilters sandFilters = new SandFilters();
+    SedimentationTank sedimentationTank = new SedimentationTank();
+    ChemicalSystem chemicalSystem = new ChemicalSystem();
+    CacBeDauRa cacBeDauRa = new CacBeDauRa();
+    Biogas biogas = new Biogas();
 
     @Override
     public String getName() {
@@ -71,14 +71,36 @@ public class CoolingArea implements INode, ISimpleNode {
         return list;
     }
 
-    private class HeThongTienXuLyNuocThai implements ISimpleNode{
+    @Override
+    public ArrayList<INode> getChilds() {
+        ArrayList list = new ArrayList<>();
+        list.add(controlAndElectricSystem);
+        list.add(heThongTienXuLyNuocThai);
+        list.add(uasb);
+        list.add(sbr);
+        list.add(heThongCacBebun);
+        list.add(stirrerTank);
+        list.add(mbbr);
+        list.add(heThongBeKiKhi);
+        list.add(boPits);
+        list.add(anoxicTank);
+        list.add(coagulationTank);
+        list.add(sandFilters);
+        list.add(sedimentationTank);
+        list.add(chemicalSystem);
+        list.add(cacBeDauRa);
+        list.add(biogas);
+        return list;
+    }
+
+    private class HeThongTienXuLyNuocThai implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống tiền xử lý nước thải";
         }
     }
 
-    private class UASB implements ISimpleNode{
+    private class UASB implements ISimpleNode {
         @Override
         public String getName() {
             return "UASB";
@@ -92,7 +114,7 @@ public class CoolingArea implements INode, ISimpleNode {
         }
     }
 
-    private class HeThongCacBebun implements ISimpleNode{
+    private class HeThongCacBebun implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống các bể bùn";
@@ -113,36 +135,35 @@ public class CoolingArea implements INode, ISimpleNode {
         }
     }
 
-    private class HeThongBeKiKhi implements ISimpleNode{
+    private class HeThongBeKiKhi implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống bể kị khí";
         }
     }
 
-    private class BOPits implements ISimpleNode{
+    private class BOPits implements ISimpleNode {
         @Override
         public String getName() {
             return "BO pits";
         }
     }
 
-    private class AnoxicTank implements ISimpleNode
-    {
+    private class AnoxicTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Anoxic tank";
         }
     }
 
-    private class CoagulationTank implements ISimpleNode{
+    private class CoagulationTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Coagulation tank";
         }
     }
 
-    private class SandFilters implements ISimpleNode{
+    private class SandFilters implements ISimpleNode {
         @Override
         public String getName() {
             return "Sand filters";
@@ -156,7 +177,7 @@ public class CoolingArea implements INode, ISimpleNode {
         }
     }
 
-    private class ChemicalSystem implements ISimpleNode{
+    private class ChemicalSystem implements ISimpleNode {
         @Override
         public String getName() {
             return "Chemical system";

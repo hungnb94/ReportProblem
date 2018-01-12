@@ -20,15 +20,15 @@ public class BoilerArea implements INode, ISimpleNode {
 //    Control and electric system for boiler 1
 //    Control and electric system for boiler 2
 
-    Boiler1 boiler1;
-    Boiler2 boiler2;
-    FeedWaterTank feedWaterTank;
-    DOSupply doSupply;
-    ValvesPipingSystem valvesPipingSystem;
-    Economizer1 economizer1;
-    Economizer2 economizer2;
-    ControlElectricBoiler1 controlElectricBoiler1;
-    ControlElectricBoiler2 controlElectricBoiler2;
+    Boiler1 boiler1 = new Boiler1();
+    Boiler2 boiler2 = new Boiler2();
+    FeedWaterTank feedWaterTank = new FeedWaterTank();
+    DOSupply doSupply = new DOSupply();
+    ValvesPipingSystem valvesPipingSystem = new ValvesPipingSystem();
+    Economizer1 economizer1 = new Economizer1();
+    Economizer2 economizer2 = new Economizer2();
+    ControlElectricBoiler1 controlElectricBoiler1 = new ControlElectricBoiler1();
+    ControlElectricBoiler2 controlElectricBoiler2 = new ControlElectricBoiler2();
 
     @Override
     public String getName() {
@@ -50,7 +50,22 @@ public class BoilerArea implements INode, ISimpleNode {
         return list;
     }
 
-    public class Boiler1 implements ISimpleNode{
+    @Override
+    public ArrayList getChilds() {
+        ArrayList list = new ArrayList<>();
+        list.add(boiler1);
+        list.add(boiler2);
+        list.add(feedWaterTank);
+        list.add(doSupply);
+        list.add(valvesPipingSystem);
+        list.add(economizer1);
+        list.add(economizer2);
+        list.add(controlElectricBoiler1);
+        list.add(controlElectricBoiler2);
+        return list;
+    }
+
+    public class Boiler1 implements ISimpleNode {
         @Override
         public String getName() {
             return "Boiler 1";
@@ -64,49 +79,49 @@ public class BoilerArea implements INode, ISimpleNode {
         }
     }
 
-    public class FeedWaterTank implements ISimpleNode{
+    public class FeedWaterTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Feed water tank";
         }
     }
 
-    public class DOSupply implements ISimpleNode{
+    public class DOSupply implements ISimpleNode {
         @Override
         public String getName() {
             return "DO supply";
         }
     }
 
-    public class ValvesPipingSystem implements ISimpleNode{
+    public class ValvesPipingSystem implements ISimpleNode {
         @Override
         public String getName() {
             return "Valves piping system";
         }
     }
 
-    public class Economizer1 implements ISimpleNode{
+    public class Economizer1 implements ISimpleNode {
         @Override
         public String getName() {
             return "Economizer 1";
         }
     }
 
-    public class Economizer2 implements ISimpleNode{
+    public class Economizer2 implements ISimpleNode {
         @Override
         public String getName() {
             return "Economizer 2";
         }
     }
 
-    public class ControlElectricBoiler1 implements ISimpleNode{
+    public class ControlElectricBoiler1 implements ISimpleNode {
         @Override
         public String getName() {
             return "ResourceBundle.Control and electric system for boiler 1";
         }
     }
 
-    public class ControlElectricBoiler2 implements ISimpleNode{
+    public class ControlElectricBoiler2 implements ISimpleNode {
         @Override
         public String getName() {
             return "ResourceBundle.Control and electric system for boiler 2";

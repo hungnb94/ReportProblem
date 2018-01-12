@@ -1,12 +1,13 @@
 package example.com.hb.reportproblem.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -32,13 +33,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isOnline()){
-            Log.e(TAG, "Not connect to internet");
+        if (!isOnline()) {
+            AlertDialog.Builder builder =new AlertDialog.Builder(this);
+            builder.setTitle("Internet không khả dụng");
+            builder.setMessage("Vui lòng kết nối mạng");
+            builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
     }
 
     @OnClick(R.id.llReportProblem)
-    public void reportProblem(View view){
+    public void reportProblem(View view) {
         Intent intent = new Intent(this, ReportProblemActivity.class);
         startActivity(intent);
     }

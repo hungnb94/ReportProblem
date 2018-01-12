@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import example.com.hb.reportproblem.model.INode;
 import example.com.hb.reportproblem.model.ISimpleNode;
+import example.com.hb.reportproblem.model.utility.CO2Area.ControlAndElectricSystem;
 
 /**
  * Created by HP ProBook on 1/10/2018.
@@ -21,16 +22,16 @@ public class AirPlant implements INode, ISimpleNode {
 //    Boiler feed pumps and tank
 //    Valves and piping system
 
-    CO2Area.ControlAndElectricSystem controlAndElectricSystem;
-    WellPump wellPump;
-    Trickler trickler;
-    HeThongLoc heThongLoc;
-    RO ro;
-    LocThan locThan;
-    SoftWaterTank softWaterTank;
-    ProductTaterTank productTaterTank;
-    BoilerFeedPumpsAndTank boilerFeedPumpsAndTank;
-    ValvesAndPipingSystem valvesAndPipingSystem;
+    ControlAndElectricSystem controlAndElectricSystem = new ControlAndElectricSystem();
+    WellPump wellPump = new WellPump();
+    Trickler trickler = new Trickler();
+    HeThongLoc heThongLoc = new HeThongLoc();
+    RO ro = new RO();
+    LocThan locThan = new LocThan();
+    SoftWaterTank softWaterTank = new SoftWaterTank();
+    ProductTaterTank productTaterTank = new ProductTaterTank();
+    BoilerFeedPumpsAndTank boilerFeedPumpsAndTank = new BoilerFeedPumpsAndTank();
+    ValvesAndPipingSystem valvesAndPipingSystem = new ValvesAndPipingSystem();
 
     @Override
     public String getName() {
@@ -53,6 +54,22 @@ public class AirPlant implements INode, ISimpleNode {
         return list;
     }
 
+    @Override
+    public ArrayList getChilds() {
+        ArrayList list = new ArrayList<>();
+        list.add(controlAndElectricSystem);
+        list.add(wellPump);
+        list.add(trickler);
+        list.add(heThongLoc);
+        list.add(ro);
+        list.add(locThan);
+        list.add(softWaterTank);
+        list.add(productTaterTank);
+        list.add(boilerFeedPumpsAndTank);
+        list.add(valvesAndPipingSystem);
+        return list;
+    }
+
 //    public class ControlAndElectricSystem implements ISimpleNode{
 //        @Override
 //        public String getName() {
@@ -60,63 +77,63 @@ public class AirPlant implements INode, ISimpleNode {
 //        }
 //    }
 
-    public class WellPump implements ISimpleNode{
+    public class WellPump implements ISimpleNode {
         @Override
         public String getName() {
             return "Well pump";
         }
     }
 
-    public class Trickler implements ISimpleNode{
+    public class Trickler implements ISimpleNode {
         @Override
         public String getName() {
             return "Trickler";
         }
     }
 
-    public class HeThongLoc implements ISimpleNode{
+    public class HeThongLoc implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống lọc";
         }
     }
 
-    public class RO implements ISimpleNode{
+    public class RO implements ISimpleNode {
         @Override
         public String getName() {
             return "RO";
         }
     }
 
-    public class LocThan implements ISimpleNode{
+    public class LocThan implements ISimpleNode {
         @Override
         public String getName() {
             return "Lọc than";
         }
     }
 
-    public class SoftWaterTank implements ISimpleNode{
+    public class SoftWaterTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Soft water tank";
         }
     }
 
-    public class ProductTaterTank implements ISimpleNode{
+    public class ProductTaterTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Product water tank";
         }
     }
 
-    public class BoilerFeedPumpsAndTank implements ISimpleNode{
+    public class BoilerFeedPumpsAndTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Boiler feed pumps and tank";
         }
     }
 
-    public class ValvesAndPipingSystem implements ISimpleNode{
+    public class ValvesAndPipingSystem implements ISimpleNode {
         @Override
         public String getName() {
             return "Valves and piping system";

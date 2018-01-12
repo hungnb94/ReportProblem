@@ -15,13 +15,13 @@ import example.com.hb.reportproblem.model.utility.WWTPArea;
  */
 
 public class Utility implements INode, ISimpleNode {
-    BoilerArea boilerArea;
-    CO2Area co2Area;
-    AirPlant airPlant;
-    CoolingArea coolingArea;
-    WTPArea wtpArea;
-    WWTPArea wwtpArea;
-    GenerationArea generationArea;
+    BoilerArea boilerArea = new BoilerArea();
+    CO2Area co2Area = new CO2Area();
+    AirPlant airPlant = new AirPlant();
+    CoolingArea coolingArea = new CoolingArea();
+    WTPArea wtpArea = new WTPArea();
+    WWTPArea wwtpArea = new WWTPArea();
+    GenerationArea generationArea = new GenerationArea();
 
     public String getName() {
         return "Utility";
@@ -37,6 +37,19 @@ public class Utility implements INode, ISimpleNode {
         list.add(wtpArea.getName());
         list.add(wwtpArea.getName());
         list.add(generationArea.getName());
+        return list;
+    }
+
+    @Override
+    public ArrayList<INode> getChilds() {
+        ArrayList<INode> list = new ArrayList();
+        list.add(boilerArea);
+        list.add(co2Area);
+        list.add(airPlant);
+        list.add(coolingArea);
+        list.add(wtpArea);
+        list.add(wwtpArea);
+        list.add(generationArea);
         return list;
     }
 }

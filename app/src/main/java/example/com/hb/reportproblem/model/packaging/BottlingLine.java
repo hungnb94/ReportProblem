@@ -10,18 +10,18 @@ import example.com.hb.reportproblem.model.ISimpleNode;
  */
 
 public class BottlingLine implements INode, ISimpleNode {
-    BottleConveyorGroup bottleConveyorGroup;
-    CrateWasher crateWasher;
-    BottleUnpacker bottleUnpacker;
-    BottlePacker bottlePacker;
-    BottleFiller bottleFiller;
-    BottleWasher bottleWasher;
-    BottlePasteuriser bottlePasteuriser;
-    BottlePalletiser bottlePalletiser;
-    BottleDePalletiser bottleDePalletiser;
-    EBI ebi;
-    LabellerMachineGroup labellerMachineGroup;
-    CrateConveyorGroup crateConveyorGroup;
+    BottleConveyorGroup bottleConveyorGroup = new BottleConveyorGroup();
+    CrateWasher crateWasher = new CrateWasher();
+    BottleUnpacker bottleUnpacker = new BottleUnpacker();
+    BottlePacker bottlePacker = new BottlePacker();
+    BottleFiller bottleFiller = new BottleFiller();
+    BottleWasher bottleWasher = new BottleWasher();
+    BottlePasteuriser bottlePasteuriser = new BottlePasteuriser();
+    BottlePalletiser bottlePalletiser = new BottlePalletiser();
+    BottleDePalletiser bottleDePalletiser = new BottleDePalletiser();
+    EBI ebi = new EBI();
+    LabellerMachineGroup labellerMachineGroup = new LabellerMachineGroup();
+    CrateConveyorGroup crateConveyorGroup = new CrateConveyorGroup();
 
     @Override
     public String getName() {
@@ -46,88 +46,226 @@ public class BottlingLine implements INode, ISimpleNode {
         return list;
     }
 
-    public class BottleConveyorGroup implements ISimpleNode {
+    @Override
+    public ArrayList<INode> getChilds() {
+        ArrayList<INode> list = new ArrayList();
+        list.add(bottleConveyorGroup);
+        list.add(crateWasher);
+        list.add(bottleUnpacker);
+        list.add(bottlePacker);
+        list.add(bottleFiller);
+        list.add(bottleWasher);
+        list.add(bottlePasteuriser);
+        list.add(bottlePalletiser);
+        list.add(bottleDePalletiser);
+        list.add(ebi);
+        list.add(labellerMachineGroup);
+        list.add(crateConveyorGroup);
+        return list;
+    }
+
+    public class BottleConveyorGroup implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Conveyor Group";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class CrateWasher implements ISimpleNode {
+    public class CrateWasher implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Crate Washer";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottleUnpacker implements ISimpleNode {
+    public class BottleUnpacker implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Unpacker";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottlePacker implements ISimpleNode {
+    public class BottlePacker implements INode, ISimpleNode {
 
         @Override
         public String getName() {
             return "Bottle Packer";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottleFiller implements ISimpleNode {
+    public class BottleFiller implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Filler";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottleWasher implements ISimpleNode {
+    public class BottleWasher implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Washer";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottlePasteuriser implements ISimpleNode {
+    public class BottlePasteuriser implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Pasteuriser";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottlePalletiser implements ISimpleNode {
+    public class BottlePalletiser implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Palletiser";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BottleDePalletiser implements ISimpleNode {
+    public class BottleDePalletiser implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle De-palletiser";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class EBI implements ISimpleNode {
+    public class EBI implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "EBI";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class LabellerMachineGroup implements ISimpleNode {
+    public class LabellerMachineGroup implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Labeller Machine Group";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class CrateConveyorGroup implements ISimpleNode {
+    public class CrateConveyorGroup implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Crate Conveyor Group";
+        }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
         }
     }
 }

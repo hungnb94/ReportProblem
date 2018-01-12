@@ -10,14 +10,14 @@ import example.com.hb.reportproblem.model.ISimpleNode;
  */
 
 public class Filltration implements INode, ISimpleNode {
-    FATank faTank;
-    BagSlitting bagSlitting;
-    UBTAndPVPP ubtAndPVPP;
-    KGF kgf;
-    FBTAndBlending fbtAndBlending;
-    BBT bbt;
-    MatureBeerLine matureBeerLine;
-    TransferBeerLine transferBeerLine;
+    FATank faTank = new FATank();
+    BagSlitting bagSlitting = new BagSlitting();
+    UBTAndPVPP ubtAndPVPP = new UBTAndPVPP();
+    KGF kgf = new KGF();
+    FBTAndBlending fbtAndBlending = new FBTAndBlending();
+    BBT bbt = new BBT();
+    MatureBeerLine matureBeerLine = new MatureBeerLine();
+    TransferBeerLine transferBeerLine = new TransferBeerLine();
 
     @Override
     public String getName() {
@@ -38,59 +38,153 @@ public class Filltration implements INode, ISimpleNode {
         return list;
     }
 
-    public class FATank implements ISimpleNode {
+    @Override
+    public ArrayList<INode> getChilds() {
+        ArrayList<INode> list = new ArrayList();
+        list.add(faTank);
+        list.add(bagSlitting);
+        list.add(ubtAndPVPP);
+        list.add(kgf);
+        list.add(fbtAndBlending);
+        list.add(bbt);
+        list.add(matureBeerLine);
+        list.add(transferBeerLine);
+        return list;
+    }
+
+    public class FATank implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "FA tank";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BagSlitting implements ISimpleNode {
+    public class BagSlitting implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bag slitting";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class UBTAndPVPP implements ISimpleNode {
+    public class UBTAndPVPP implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "UBT & PVPP";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class KGF implements ISimpleNode {
+    public class KGF implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "KGF";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class FBTAndBlending implements ISimpleNode {
+    public class FBTAndBlending implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "FBT & Blending";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class BBT implements ISimpleNode {
+    public class BBT implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "BBT";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class MatureBeerLine implements ISimpleNode {
+    public class MatureBeerLine implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Mature beer line";
         }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
     }
 
-    public class TransferBeerLine implements ISimpleNode {
+    public class TransferBeerLine implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Transfer beer line";
+        }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
         }
     }
 }

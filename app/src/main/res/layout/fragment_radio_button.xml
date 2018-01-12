@@ -6,29 +6,40 @@
     android:layout_margin="@dimen/magin_layout"
     tools:context="example.com.hb.reportproblem.fragment.RadioButtonFragment">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:textSize="@dimen/title_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/llRadioGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvTitle"
+            android:textSize="@dimen/title_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <include
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/llRadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                layout="@layout/footer"/>
-        </LinearLayout>
-    </FrameLayout>
+                android:layout_height="wrap_content"></LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!--<FrameLayout-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <!--<include-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--layout="@layout/footer"/>-->
+    <!--</LinearLayout>-->
+    <!--</FrameLayout>-->
 </FrameLayout>

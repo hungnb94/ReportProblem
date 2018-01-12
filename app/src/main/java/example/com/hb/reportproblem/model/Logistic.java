@@ -17,4 +17,9 @@ public class Logistic implements INode, ISimpleNode {
     public ArrayList<String> getList() {
         return null;
     }
+
+    @Override
+    public ArrayList<INode> getChilds() {
+        return null;
+    }
 }

@@ -36,31 +36,31 @@ public class CO2Area implements INode, ISimpleNode {
 //    Condenser
 //    Valves and piping system
 
-    CO2Washer1 co2Washer1;
-    CO2Washer2 co2Washer2;
-    CO2Compressor1 co2Compressor1;
-    CO2Compressor2 co2Compressor2;
-    CO2Compressor3 co2Compressor3;
-    HeThongHutMuiCO2 heThongHutMuiCO2;
-    HoaLongCO2 hoaLongCO2;
-    NH3_CO2Comp nh3_co2Comp;
-    BayHoiCO2 bayHoiCO2;
-    TankChuaCO2 tankChuaCO2;
-    LoadAndUnloadCO2 loadAndUnloadCO2;
-    CO2PumpCylinder co2PumpCylinder;
-    AirCompressor airCompressor;
-    AirDrier airDrier;
-    AirTankAndPipingSystem airTankAndPipingSystem;
-    ControlAndElectricSystem controlAndElectricSystem;
-    PrimeryPumps primeryPumps;
-    SecondaryPumps secondaryPumps;
-    PHE phe;
-    StratificationTank stratificationTank;
-    ExpantionTanks expantionTanks;
-    NH3Tank nh3Tank;
-    NH3Compressor nh3Compressor;
-    Condenser condenser;
-    ValvesAndPipingSystem valvesAndPipingSystem;
+    CO2Washer1 co2Washer1 = new CO2Washer1();
+    CO2Washer2 co2Washer2 = new CO2Washer2();
+    CO2Compressor1 co2Compressor1 = new CO2Compressor1();
+    CO2Compressor2 co2Compressor2 = new CO2Compressor2();
+    CO2Compressor3 co2Compressor3 = new CO2Compressor3();
+    HeThongHutMuiCO2 heThongHutMuiCO2 = new HeThongHutMuiCO2();
+    HoaLongCO2 hoaLongCO2 = new HoaLongCO2();
+    NH3_CO2Comp nh3_co2Comp = new NH3_CO2Comp();
+    BayHoiCO2 bayHoiCO2 = new BayHoiCO2();
+    TankChuaCO2 tankChuaCO2 = new TankChuaCO2();
+    LoadAndUnloadCO2 loadAndUnloadCO2 = new LoadAndUnloadCO2();
+    CO2PumpCylinder co2PumpCylinder = new CO2PumpCylinder();
+    AirCompressor airCompressor = new AirCompressor();
+    AirDrier airDrier = new AirDrier();
+    AirTankAndPipingSystem airTankAndPipingSystem = new AirTankAndPipingSystem();
+    ControlAndElectricSystem controlAndElectricSystem = new ControlAndElectricSystem();
+    PrimeryPumps primeryPumps = new PrimeryPumps();
+    SecondaryPumps secondaryPumps = new SecondaryPumps();
+    PHE phe = new PHE();
+    StratificationTank stratificationTank = new StratificationTank();
+    ExpantionTanks expantionTanks = new ExpantionTanks();
+    NH3Tank nh3Tank = new NH3Tank();
+    NH3Compressor nh3Compressor = new NH3Compressor();
+    Condenser condenser = new Condenser();
+    ValvesAndPipingSystem valvesAndPipingSystem = new ValvesAndPipingSystem();
 
     @Override
     public String getName() {
@@ -95,6 +95,37 @@ public class CO2Area implements INode, ISimpleNode {
         list.add(nh3Compressor.getName());
         list.add(condenser.getName());
         list.add(valvesAndPipingSystem.getName());
+        return list;
+    }
+
+    @Override
+    public ArrayList getChilds() {
+        ArrayList list = new ArrayList<>();
+        list.add(co2Washer1);
+        list.add(co2Washer2);
+        list.add(co2Compressor1);
+        list.add(co2Compressor2);
+        list.add(co2Compressor3);
+        list.add(heThongHutMuiCO2);
+        list.add(hoaLongCO2);
+        list.add(nh3_co2Comp);
+        list.add(bayHoiCO2);
+        list.add(tankChuaCO2);
+        list.add(loadAndUnloadCO2);
+        list.add(co2PumpCylinder);
+        list.add(airCompressor);
+        list.add(airDrier);
+        list.add(airTankAndPipingSystem);
+        list.add(controlAndElectricSystem);
+        list.add(primeryPumps);
+        list.add(secondaryPumps);
+        list.add(phe);
+        list.add(stratificationTank);
+        list.add(expantionTanks);
+        list.add(nh3Tank);
+        list.add(nh3Compressor);
+        list.add(condenser);
+        list.add(valvesAndPipingSystem);
         return list;
     }
 
@@ -203,7 +234,7 @@ public class CO2Area implements INode, ISimpleNode {
         }
     }
 
-    public class ControlAndElectricSystem implements ISimpleNode {
+    public static class ControlAndElectricSystem implements ISimpleNode {
         @Override
         public String getName() {
             return "ResourceBundle.Control and electric system";

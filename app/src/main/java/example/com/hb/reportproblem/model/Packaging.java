@@ -11,11 +11,11 @@ import example.com.hb.reportproblem.model.packaging.OtherPKG;
  * Created by HP ProBook on 1/9/2018.
  */
 
-public class Packaging implements INode, ISimpleNode{
-    BottlingLine bottlingLine;
-    KeggingLine keggingLine;
-    CanningLine2 canningLine2;
-    OtherPKG otherPKG;
+public class Packaging implements INode, ISimpleNode {
+    BottlingLine bottlingLine = new BottlingLine();
+    KeggingLine keggingLine = new KeggingLine();
+    CanningLine2 canningLine2 = new CanningLine2();
+    OtherPKG otherPKG = new OtherPKG();
 
     @Override
     public String getName() {
@@ -29,6 +29,16 @@ public class Packaging implements INode, ISimpleNode{
         list.add(keggingLine.getName());
         list.add(canningLine2.getName());
         list.add(otherPKG.getName());
+        return list;
+    }
+
+    @Override
+    public ArrayList<INode> getChilds() {
+        ArrayList<INode> list = new ArrayList();
+        list.add(bottlingLine);
+        list.add(keggingLine);
+        list.add(canningLine2);
+        list.add(otherPKG);
         return list;
     }
 }

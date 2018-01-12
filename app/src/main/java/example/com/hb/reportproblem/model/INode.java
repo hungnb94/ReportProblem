@@ -8,4 +8,6 @@ import java.util.ArrayList;
 
 public interface INode {
     public ArrayList<String> getList();
+
+    public ArrayList<INode> getChilds();
 }

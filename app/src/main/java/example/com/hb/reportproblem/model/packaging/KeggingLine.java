@@ -10,13 +10,13 @@ import example.com.hb.reportproblem.model.ISimpleNode;
  */
 
 public class KeggingLine implements INode, ISimpleNode {
-    KegCIPGroup kegCIPGroup;
-    KegWasherFiller kegWasherFiller;
-    KegFlashPasteurizer kegFlashPasteurizer;
-    KegWeigherGroup kegWeigherGroup;
-    KegChainConveyor kegChainConveyor;
-    KegRollerConveyor kegRollerConveyor;
-    KegInjetCoder kegInjetCoder;
+    KegCIPGroup kegCIPGroup = new KegCIPGroup();
+    KegWasherFiller kegWasherFiller = new KegWasherFiller();
+    KegFlashPasteurizer kegFlashPasteurizer = new KegFlashPasteurizer();
+    KegWeigherGroup kegWeigherGroup = new KegWeigherGroup();
+    KegChainConveyor kegChainConveyor = new KegChainConveyor();
+    KegRollerConveyor kegRollerConveyor = new KegRollerConveyor();
+    KegInjetCoder kegInjetCoder = new KegInjetCoder();
 
     @Override
     public String getName() {
@@ -33,6 +33,19 @@ public class KeggingLine implements INode, ISimpleNode {
         list.add(kegChainConveyor.getName());
         list.add(kegRollerConveyor.getName());
         list.add(kegInjetCoder.getName());
+        return list;
+    }
+
+    @Override
+    public ArrayList getChilds() {
+        ArrayList list = new ArrayList();
+        list.add(kegCIPGroup);
+        list.add(kegWasherFiller);
+        list.add(kegFlashPasteurizer);
+        list.add(kegWeigherGroup);
+        list.add(kegChainConveyor);
+        list.add(kegRollerConveyor);
+        list.add(kegInjetCoder);
         return list;
     }
 
