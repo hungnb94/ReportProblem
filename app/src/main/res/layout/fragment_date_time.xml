@@ -1,0 +1,68 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="example.com.hb.reportproblem.fragment.DateTimeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginBottom="@dimen/magin_layout"
+            android:gravity="center"
+            android:textSize="@dimen/title_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ngày Viết Tag" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tvDate"
+                android:textSize="@dimen/size_small"
+                android:text="Ngày: 06/07/2017"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!--<Button-->
+                <!--android:text="..."-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/magin_layout"
+            android:textSize="@dimen/size_small"
+            android:text="Thời gian viết"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <RadioGroup
+            android:id="@+id/groupTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RadioButton
+                android:id="@+id/rbtAM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Buổi sáng (AM)" />
+
+            <RadioButton
+                android:id="@+id/rbtPM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Buổi chiều (PM)" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+</FrameLayout>

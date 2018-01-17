@@ -27,7 +27,6 @@ public class DangNguyCo implements INode, ISimpleNode {
         list.add("S10-6: Nguy cơ về môi trường: Thiếu khí, thông khí kém");
         list.add("S11: Nguy cơ khác");
         list.add("S12: Nguy cơ liên quan tới sản phẩm");
-        list.add("");
         return list;
     }
 

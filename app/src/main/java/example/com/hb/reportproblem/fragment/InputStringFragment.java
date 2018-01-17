@@ -33,7 +33,7 @@ public class InputStringFragment extends Fragment implements IBaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args=getArguments();
+        Bundle args = getArguments();
         if (args != null) {
             title = args.getString(TITLE);
             inputDefault = args.getString(INPUT_DEFAULT);
@@ -54,7 +54,7 @@ public class InputStringFragment extends Fragment implements IBaseFragment {
 
     private void initView() {
         textView.setText(title);
-        if (inputDefault!=null)
+        if (inputDefault != null)
             editText.setText(inputDefault);
     }
 

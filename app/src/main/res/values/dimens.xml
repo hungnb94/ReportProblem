@@ -7,4 +7,7 @@
     <dimen name="title_fragment">25sp</dimen>
     <dimen name="size_medium">25sp</dimen>
     <dimen name="height_problem">250dp</dimen>
+    <dimen name="size_small">20sp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="height_text_main">50dp</dimen>
 </resources>

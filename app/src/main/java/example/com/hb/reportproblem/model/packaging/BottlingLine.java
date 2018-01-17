@@ -64,7 +64,7 @@ public class BottlingLine implements INode, ISimpleNode {
         return list;
     }
 
-    public class BottleConveyorGroup implements INode, ISimpleNode {
+    public static class BottleConveyorGroup implements INode, ISimpleNode {
         @Override
         public String getName() {
             return "Bottle Conveyor Group";

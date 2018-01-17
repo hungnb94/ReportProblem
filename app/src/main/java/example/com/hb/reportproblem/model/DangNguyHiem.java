@@ -25,6 +25,6 @@ public class DangNguyHiem implements INode, ISimpleNode {
 
     @Override
     public String getName() {
-        return "Dạng Nguy Cơ";
+        return "Dạng Nguy Hiểm";
     }
 }

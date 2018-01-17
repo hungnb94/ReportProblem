@@ -10,34 +10,56 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import example.com.hb.reportproblem.R;
 import example.com.hb.reportproblem.connection.APIService;
+import example.com.hb.reportproblem.connection.ApiUtils;
+import example.com.hb.reportproblem.fragment.DateFragment;
+import example.com.hb.reportproblem.fragment.DateTimeFragment;
 import example.com.hb.reportproblem.fragment.InputStringFragment;
 import example.com.hb.reportproblem.fragment.RadioButtonFragment;
 import example.com.hb.reportproblem.model.Brewing;
+import example.com.hb.reportproblem.model.CumMay;
+import example.com.hb.reportproblem.model.DangLoiAM;
+import example.com.hb.reportproblem.model.DangNguyCo;
+import example.com.hb.reportproblem.model.DangNguyHiem;
+import example.com.hb.reportproblem.model.HQState;
 import example.com.hb.reportproblem.model.INode;
 import example.com.hb.reportproblem.model.ISimpleNode;
 import example.com.hb.reportproblem.model.Logistic;
+import example.com.hb.reportproblem.model.NguoiVietTag;
 import example.com.hb.reportproblem.model.Packaging;
 import example.com.hb.reportproblem.model.Utility;
+import example.com.hb.reportproblem.model.response.Message;
+import example.com.hb.reportproblem.utils.BitmapUtils;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
+import static example.com.hb.reportproblem.fragment.DateTimeFragment.AM_TAG;
+import static example.com.hb.reportproblem.fragment.DateTimeFragment.DATE;
+import static example.com.hb.reportproblem.fragment.DateTimeFragment.MONTH;
+import static example.com.hb.reportproblem.fragment.DateTimeFragment.YEAR;
 import static example.com.hb.reportproblem.fragment.InputStringFragment.INPUT_DEFAULT;
 import static example.com.hb.reportproblem.fragment.InputStringFragment.TITLE;
 import static example.com.hb.reportproblem.fragment.RadioButtonFragment.CURRENT_SELECTED;
@@ -49,18 +71,37 @@ public class ReportProblemActivity extends FragmentActivity {
     public static final String FIRST_FRAGMENT = "FIRST";
     public static final String SECOND_FRAGMENT = "SECOND";
     public static final String THIRD_FRAGMENT = "THIRD";
-    public static final String FOURTH_FRAGMENT = "FOURTH";
-    public static final String FIVETH_FRAGMENT = "FIVETH";
+    public static final String FRAGMENT_04TH = "FR_04";
+    public static final String FRAGMENT_05TH = "FR_05";
+    public static final String FRAGMENT_06TH = "FR_06";
+    public static final String FRAGMENT_07TH = "FR_07";
+    public static final String FRAGMENT_08TH = "FR_08";
+    public static final String FRAGMENT_09TH = "FR_09";
+    public static final String FRAGMENT_10TH = "FR_10";
+    public static final String FRAGMENT_11TH = "FR_11";
+    public static final String FRAGMENT_12TH = "FR_12";
+    public static final String FRAGMENT_13TH = "FR_13";
+    public static final String FRAGMENT_14TH = "FR_14";
+    public static final String FRAGMENT_15TH = "FR_15";
+
+    Bitmap bitmap;
     File imgFile;
     ArrayList listNode = new ArrayList();
-    String strBoPhan, strKhuVucMay, strMay, strCumMay, strChiTietMay, strNguoiViet,
-            strDangNguyHiem, strDangLoi, strDangNguyCo, strMoTaChiTiet, strNgayViet,
-            strGioViet, strHqCaoOrThap, strWeekToDo, strGiaiPhap, strSoNgayTonDong,
-            strNgayXuLy, strAmTeam, strType, strTank, strDone, strCode, strSafeCode,
-            strTimeline, strWoNumber;
+    String strBoPhan = "", strKhuVucMay = "", strMay = "", strCumMay = "", strChiTietMay = "",
+            strNguoiViet = "", strDangNguyHiem = "", strDangLoi = "", strDangNguyCo = "",
+            strMoTaChiTiet = "", strNgayViet = "",
+    //strAM_PMTag = "",
+    //strHqCaoOrThap = "",
+    strWeekToDo = "", strGiaiPhap = "",
+            strSoNgayTonDong = "",
+            strNgayXuLy = "",
+            strAmTeam = "", strType = "", strRank = "", strDone = "", strCode = "",
+            strSafeCode = "", strTimeline = "", strWoNumber = "";
+    boolean am_pmTag = true, hqCaoThap = true;
+    Calendar ngayViet = Calendar.getInstance();
+    Calendar ngayThucTeXuLy = Calendar.getInstance();
     int currentPos, maxPos;
     Object currentNode;
-    APIService apiService;
     private String TAG = "ReportProblemActivity";
     @BindView(R.id.flContent)
     FrameLayout flContent;
@@ -69,7 +110,7 @@ public class ReportProblemActivity extends FragmentActivity {
     ImageView ivProblem;
 
     @BindView(R.id.flProblem)
-    FrameLayout flProblem;
+    LinearLayout flProblem;
 
     @BindView(R.id.tvNext)
     TextView tvNext;
@@ -82,7 +123,7 @@ public class ReportProblemActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_problem);
         ButterKnife.bind(this);
-        for (int i=0; i< 30;i++)
+        for (int i = 0; i < 30; i++)
             listNode.add(new Object());
     }
 
@@ -100,64 +141,340 @@ public class ReportProblemActivity extends FragmentActivity {
                 thirdFragment();
                 break;
             case 3:
-                fragment4th();
+                fragment_4th();
                 break;
             case 4:
-                fragment5th();
+                fragment_5th();
                 break;
             case 5:
-                fragment6th();
+                fragment_6th();
+                break;
+            case 6:
+                fragment_7th();
+                break;
+            case 7:
+                fragment_8th();
+                break;
+            case 8:
+                fragment_9th();
+                break;
+            case 9:
+                fragment_10th();
+                break;
+            case 10:
+                fragment_11th();
+                break;
+            case 11:
+                fragment_12th();
+                break;
+            case 12:
+                fragment_13th();
+                break;
+            case 13:
+                fragment_14th();
+                break;
+            case 14:
+                fragment_15th();
                 break;
             default:
+                sendData();
                 break;
         }
         if (maxPos < currentPos) maxPos = currentPos;
     }
 
-    private void fragment6th() {
-        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
-                .findFragmentByTag(FIVETH_FRAGMENT);
-        if (prevFragment != null && prevFragment.isVisible()) {
-            String inputData = prevFragment.getInputData();
-            if (inputData != null) {
-                Log.e(TAG, "Input 5: " + inputData);
-                currentPos = 6;
-                if (!inputData.equals(strChiTietMay)) {
-                    strChiTietMay = inputData;
-                    maxPos = currentPos;
-                }
-                String currentString = null;
-                if (currentPos < maxPos) {
-                    Log.e(TAG, "Fragment 6: Position < MaxPosition");
-                    try {
-                        ISimpleNode node = (ISimpleNode) listNode.get(currentPos+1);
-                        currentString = node.getName();
-                    } catch (Exception e){
-                    }
-                }
-                ArrayList<String> list = null;
+    private void sendData() {
+        Log.e(TAG, "Send Data");
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("image/*"), imgFile);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image",
+                imgFile.getName(), requestFile);
+        RequestBody bodyBoPhan = RequestBody.create(MediaType.parse("text/plain"),
+                strBoPhan);
+        RequestBody bodyKhuVucMay = RequestBody.create(MediaType.parse("text/plain"),
+                strKhuVucMay);
+        RequestBody bodyMay = RequestBody.create(MediaType.parse("text/plain"),
+                strMay);
+        RequestBody bodyCumMay = RequestBody.create(MediaType.parse("text/plain"),
+                strCumMay);
+        RequestBody bodyChiTietMay = RequestBody.create(MediaType.parse("text/plain"),
+                strChiTietMay);
+        RequestBody bodyNguoiVietTag = RequestBody.create(MediaType.parse("text/plain"),
+                strNguoiViet);
+        RequestBody bodyDangNguyHiem = RequestBody.create(MediaType.parse("text/plain"),
+                strDangNguyHiem);
+        RequestBody bodyDangLoi = RequestBody.create(MediaType.parse("text/plain"),
+                strDangLoi);
+        RequestBody bodyDangNguyCo = RequestBody.create(MediaType.parse("text/plain"),
+                strDangNguyCo);
+        RequestBody bodyMoTaChiTiet = RequestBody.create(MediaType.parse("text/plain"),
+                strMoTaChiTiet);
+        RequestBody bodyNgayVietTag = RequestBody.create(MediaType.parse("text/plain"),
+                strNgayViet);
+        RequestBody bodyAMTag = RequestBody.create(MediaType.parse("text/plain"),
+                String.valueOf(am_pmTag));
+        RequestBody bodyHQCao = RequestBody.create(MediaType.parse("text/plain"),
+                String.valueOf(hqCaoThap));
+        RequestBody bodyWeekToDo = RequestBody.create(MediaType.parse("text/plain"),
+                strWeekToDo);
+        RequestBody bodyGiaiPhapTrietDe = RequestBody.create(MediaType.parse("text/plain"),
+                strGiaiPhap);
+        RequestBody bodySoNgayTonDong = RequestBody.create(MediaType.parse("text/plain"),
+                strSoNgayTonDong);
+
+        DateFragment prevFragment = (DateFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_15TH);
+        ngayThucTeXuLy = prevFragment.getCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        strNgayXuLy = sdf.format(ngayThucTeXuLy.getTime());
+        RequestBody bodyNgayXuLy = RequestBody.create(MediaType.parse("text/plain"),
+                strNgayXuLy);
+
+        RequestBody bodyAMTeam = RequestBody.create(MediaType.parse("text/plain"),
+                strAmTeam);
+        RequestBody bodyType = RequestBody.create(MediaType.parse("text/plain"),
+                strType);
+        RequestBody bodyRank = RequestBody.create(MediaType.parse("text/plain"),
+                strRank);
+        RequestBody bodyDone = RequestBody.create(MediaType.parse("text/plain"),
+                strDone);
+        RequestBody bodyCode = RequestBody.create(MediaType.parse("text/plain"),
+                strCode);
+        RequestBody bodySafetyCode = RequestBody.create(MediaType.parse("text/plain"),
+                strSafeCode);
+        RequestBody bodyTimeline = RequestBody.create(MediaType.parse("text/plain"),
+                strTimeline);
+        RequestBody bodyWONumber = RequestBody.create(MediaType.parse("text/plain"),
+                strWoNumber);
+        APIService apiService = ApiUtils.getAPIService();
+//        Call<ResponseBody> call = apiService.newProblem(bodyBoPhan, bodyKhuVucMay, bodyMay,
+//                bodyCumMay, bodyChiTietMay, bodyNguoiVietTag, bodyDangNguyHiem, bodyDangLoi,
+//                bodyDangNguyCo, bodyMoTaChiTiet, bodyNgayVietTag, bodyAMTag, bodyHQCao,
+//                bodyWeekToDo, bodyGiaiPhapTrietDe, bodyNgayXuLy, filePart);
+        Call<ResponseBody> call = apiService.addProblem(bodyBoPhan, bodyKhuVucMay, bodyMay,
+                bodyCumMay, bodyChiTietMay, bodyNguoiVietTag, bodyDangNguyHiem, bodyDangLoi,
+                bodyDangNguyCo, bodyMoTaChiTiet, bodyNgayVietTag, bodyAMTag, bodyHQCao,
+                bodyWeekToDo, bodyGiaiPhapTrietDe, bodySoNgayTonDong, bodyNgayXuLy,
+                bodyAMTeam, bodyType, bodyRank, bodyDone, bodyCode, bodySafetyCode,
+                bodyTimeline, bodyWONumber, filePart);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   retrofit2.Response<ResponseBody> response) {
                 try {
-                    INode node = (INode) listNode.get(currentPos-1);
-                    for (Object object : node.getChilds()) {
-                        ISimpleNode simpleNode = (ISimpleNode) object;
-                        if (inputData.equals(simpleNode.getName())) {
-                            currentNode = simpleNode;
-                            list = ((INode) currentNode).getList();
-                            listNode.set(currentPos, currentNode);
-                        }
+                    String res=response.body().string();
+                    Gson gson = new Gson();
+                    Message message = gson.fromJson(res, Message.class);
+                    if (message.getError()==false){
+                        showToast("Thành công");
+                        finish();
+                    } else {
+                        showToast("Có lỗi: " + message.getMessage());
                     }
-                } catch (Exception e) {
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                radioFragment(list, "Người viết Tag", currentString, FOURTH_FRAGMENT);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showToast("Có lỗi xảy ra: " + t.getMessage());
+            }
+        });
+    }
+
+    private void fragment_15th() {
+        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_14TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            strGiaiPhap = prevFragment.getInputData();
+            currentPos = 15;
+            ngayXuLyFragment(ngayThucTeXuLy, FRAGMENT_15TH);
+        }
+    }
+
+    private void fragment_14th() {
+        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_13TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            strWeekToDo = prevFragment.getInputData();
+            currentPos = 14;
+            stringFragment("Giải Pháp Xử Lý Triệt Để", strGiaiPhap, FRAGMENT_14TH);
+        }
+    }
+
+    private void fragment_13th() {
+        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_12TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String hqType = prevFragment.getInputData();
+            if (hqType != null) {
+                Log.e(TAG, "Input 12: " + hqType);
+                if (hqType.equals(HQState.HQ_CAO))
+                    hqCaoThap = true;
+                else
+                    hqCaoThap = false;
+                currentPos = 13;
+                stringFragment("Week to do", strWeekToDo, FRAGMENT_13TH);
             } else {
-                showToast("Bạn phải chọn 1");
+                showToast(getResources().getString(R.string.chon_mot));
             }
         }
     }
 
-    private void fragment5th() {
+    private void fragment_12th() {
+        DateTimeFragment prevFragment = (DateTimeFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_11TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            ngayViet = prevFragment.getCalendar();
+            Log.e(TAG, "Input 11: " + ngayViet.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            strNgayViet = sdf.format(ngayViet.getTime());
+            Boolean amTag = prevFragment.getAmPmTag();
+            if (amTag != null) {
+                currentPos = 12;
+                am_pmTag = amTag;
+                String currentSelected = (hqCaoThap ? HQState.HQ_CAO : HQState.HQ_THAP);
+                HQState hqState = new HQState();
+                radioFragment(hqState.getList(), hqState.getName(),
+                        currentSelected, FRAGMENT_12TH);
+            } else {
+                showToast(getResources().getString(R.string.chon_mot));
+            }
+        }
+    }
+
+    private void fragment_11th() {
+        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_10TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String inputData = prevFragment.getInputData();
+            if (inputData != null) {
+                Log.e(TAG, "Input 10: " + inputData);
+                currentPos = 11;
+                if (!inputData.equals(strMoTaChiTiet)) {
+                    strMoTaChiTiet = inputData;
+                    maxPos = currentPos;
+                }
+                currentNode = inputData;
+                listNode.set(currentPos, inputData);
+                dateFragment(ngayViet, am_pmTag, FRAGMENT_11TH);
+            }
+        }
+    }
+
+    private void fragment_10th() {
         RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
-                .findFragmentByTag(FOURTH_FRAGMENT);
+                .findFragmentByTag(FRAGMENT_09TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String inputData = prevFragment.getInputData();
+            if (inputData != null) {
+                Log.e(TAG, "Input 9: " + inputData);
+                currentPos = 10;
+                if (!inputData.equals(strDangNguyCo)) {
+                    strDangNguyCo = inputData;
+                    maxPos = currentPos;
+                }
+                currentNode = inputData;
+                listNode.set(currentPos, inputData);
+                stringFragment("Mô Tả Chi Tiết Vấn Đề", strMoTaChiTiet, FRAGMENT_10TH);
+            } else {
+                showToast(getResources().getString(R.string.chon_mot));
+            }
+        }
+    }
+
+    private void fragment_9th() {
+        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_08TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String inputData = prevFragment.getInputData();
+            if (inputData != null) {
+                Log.e(TAG, "Input 8: " + inputData);
+                currentPos = 9;
+                if (!inputData.equals(strDangLoi)) {
+                    strDangLoi = inputData;
+                    maxPos = currentPos;
+                }
+                DangNguyCo dangNguyCo = new DangNguyCo();
+                ArrayList<String> list = dangNguyCo.getList();
+                currentNode = dangNguyCo;
+                listNode.set(currentPos, dangNguyCo);
+                radioFragment(list, dangNguyCo.getName(), strDangNguyCo, FRAGMENT_09TH);
+            } else {
+                showToast(getResources().getString(R.string.chon_mot));
+            }
+        }
+    }
+
+    private void fragment_8th() {
+        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_07TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String inputData = prevFragment.getInputData();
+            if (inputData != null) {
+                Log.e(TAG, "Input 7: " + inputData);
+                currentPos = 8;
+                if (!inputData.equals(strDangNguyHiem)) {
+                    strDangNguyHiem = inputData;
+                    maxPos = currentPos;
+                }
+                DangLoiAM dangLoiAM = new DangLoiAM();
+                ArrayList<String> list = dangLoiAM.getList();
+                currentNode = dangLoiAM;
+                listNode.set(currentPos, dangLoiAM);
+                radioFragment(list, dangLoiAM.getName(), strDangLoi, FRAGMENT_08TH);
+            } else {
+                showToast(getResources().getString(R.string.chon_mot));
+            }
+        }
+    }
+
+    private void fragment_7th() {
+        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_06TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String inputData = prevFragment.getInputData();
+            if (inputData != null) {
+                Log.e(TAG, "Input 6: " + inputData);
+                currentPos = 7;
+                if (!inputData.equals(strNguoiViet)) {
+                    strNguoiViet = inputData;
+                    maxPos = currentPos;
+                }
+                DangNguyHiem dangNguyHiem = new DangNguyHiem();
+                ArrayList<String> list = dangNguyHiem.getList();
+                currentNode = dangNguyHiem;
+                listNode.set(currentPos, dangNguyHiem);
+                radioFragment(list, dangNguyHiem.getName(), strDangNguyHiem, FRAGMENT_07TH);
+            } else {
+                showToast(getResources().getString(R.string.chon_mot));
+            }
+        }
+    }
+
+    private void fragment_6th() {
+        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_05TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            String inputData = prevFragment.getInputData();
+            Log.e(TAG, "Input 5: " + inputData);
+            currentPos = 6;
+            if (!inputData.equals(strChiTietMay)) {
+                strChiTietMay = inputData;
+                maxPos = currentPos;
+            }
+            NguoiVietTag nguoiVietTag = new NguoiVietTag();
+            ArrayList<String> list = nguoiVietTag.getList();
+            currentNode = nguoiVietTag;
+            listNode.set(currentPos, inputData);
+            radioFragment(list, nguoiVietTag.getName(), strNguoiViet, FRAGMENT_06TH);
+        }
+    }
+
+    private void fragment_5th() {
+        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_04TH);
         if (prevFragment != null && prevFragment.isVisible()) {
             String inputData = prevFragment.getInputData();
             if (inputData != null) {
@@ -167,14 +484,25 @@ public class ReportProblemActivity extends FragmentActivity {
                     strCumMay = inputData;
                     maxPos = currentPos;
                 }
-                stringFragment("Chi tiết máy", strChiTietMay, FIVETH_FRAGMENT);
+                try {
+                    INode node = (INode) listNode.get(currentPos - 1);
+                    for (Object object : node.getChilds()) {
+                        ISimpleNode simpleNode = (ISimpleNode) object;
+                        if (inputData.equals(simpleNode.getName())) {
+                            currentNode = simpleNode;
+                            listNode.set(currentPos, currentNode);
+                        }
+                    }
+                } catch (Exception e) {
+                }
+                stringFragment("Chi tiết máy", strChiTietMay, FRAGMENT_05TH);
             } else {
                 showToast(getResources().getString(R.string.chon_mot));
             }
         }
     }
 
-    private void fragment4th() {
+    private void fragment_4th() {
         RadioButtonFragment thirdFragment = (RadioButtonFragment) getSupportFragmentManager()
                 .findFragmentByTag(THIRD_FRAGMENT);
         if (thirdFragment != null && thirdFragment.isVisible()) {
@@ -186,29 +514,11 @@ public class ReportProblemActivity extends FragmentActivity {
                     strMay = inputData;
                     maxPos = currentPos;
                 }
-                String currentString = null;
-                ArrayList<String> list = null;
-                if (currentPos < maxPos) {
-                    Log.e(TAG, "Fragment 4: Position < MaxPosition");
-                    try {
-                        ISimpleNode node = (ISimpleNode) listNode.get(currentPos+1);
-                        currentString = node.getName();
-                    } catch (Exception e){
-                    }
-                }
-                try {
-                    INode node = (INode) listNode.get(currentPos-1);
-                    for (Object object : node.getChilds()) {
-                        ISimpleNode simpleNode = (ISimpleNode) object;
-                        if (inputData.equals(simpleNode.getName())) {
-                            currentNode = simpleNode;
-                            list = ((INode) currentNode).getList();
-                            listNode.set(currentPos, currentNode);
-                        }
-                    }
-                } catch (Exception e) {
-                }
-                radioFragment(list, "Cụm máy", currentString, FOURTH_FRAGMENT);
+                CumMay cumMay = new CumMay();
+                ArrayList<String> list = cumMay.getList();
+                currentNode = cumMay;
+                listNode.set(currentPos, inputData);
+                radioFragment(list, cumMay.getName(), strCumMay, FRAGMENT_04TH);
             } else {
                 showToast(getResources().getString(R.string.chon_mot));
             }
@@ -227,18 +537,9 @@ public class ReportProblemActivity extends FragmentActivity {
                     strKhuVucMay = inputData;
                     maxPos = currentPos;
                 }
-                String currentString = null;
                 ArrayList<String> list = null;
-                if (currentPos < maxPos) {
-                    Log.e(TAG, "Fragment 3: Position < MaxPosition");
-                    try {
-                        ISimpleNode node = (ISimpleNode) listNode.get(currentPos+1);
-                        currentString = node.getName();
-                    } catch (Exception e){
-                    }
-                }
                 try {
-                    INode node = (INode) listNode.get(currentPos-1);
+                    INode node = (INode) listNode.get(currentPos - 1);
                     for (Object object : node.getChilds()) {
                         ISimpleNode simpleNode = (ISimpleNode) object;
                         if (inputData.equals(simpleNode.getName())) {
@@ -249,7 +550,7 @@ public class ReportProblemActivity extends FragmentActivity {
                     }
                 } catch (Exception e) {
                 }
-                radioFragment(list, "Máy", currentString, THIRD_FRAGMENT);
+                radioFragment(list, "Máy", strMay, THIRD_FRAGMENT);
             } else {
                 showToast("Bạn phải chọn 1");
             }
@@ -267,15 +568,6 @@ public class ReportProblemActivity extends FragmentActivity {
                 if (!inputData.equals(strBoPhan)) {
                     strBoPhan = inputData;
                     maxPos = currentPos;
-                }
-                String currentString = null;
-                if (currentPos < maxPos) {
-                    Log.e(TAG, "Fragment 2: Position < MaxPosition");
-                    try {
-                        ISimpleNode node = (ISimpleNode) listNode.get(currentPos+1);
-                        currentString = node.getName();
-                    } catch (Exception e){
-                    }
                 }
                 ArrayList<String> list = null;
                 Brewing brewing = new Brewing();
@@ -297,15 +589,11 @@ public class ReportProblemActivity extends FragmentActivity {
                 }
                 listNode.set(currentPos, currentNode);
                 radioFragment(list, getResources().getString(R.string.khu_vuc_may),
-                        currentString, SECOND_FRAGMENT);
+                        strKhuVucMay, SECOND_FRAGMENT);
             } else {
                 showToast("Bạn phải chọn 1");
             }
         }
-    }
-
-    private void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void firstFragment() {
@@ -314,6 +602,10 @@ public class ReportProblemActivity extends FragmentActivity {
         String currentString = strBoPhan;
         radioFragment(list, getResources().getString(R.string.bo_phan),
                 currentString, FIRST_FRAGMENT);
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     public ArrayList<String> getListFirst() {
@@ -333,9 +625,8 @@ public class ReportProblemActivity extends FragmentActivity {
         RadioButtonFragment fragment = new RadioButtonFragment();
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.enter_from_left,
-//                R.anim.enter_from_right, R.anim.enter_from_left);
-//        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right,
+//        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
+//                android.R.anim.slide_out_right,
 //                android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.flContent, fragment, tag);
         fragmentTransaction.addToBackStack(null);
@@ -347,7 +638,7 @@ public class ReportProblemActivity extends FragmentActivity {
         }
     }
 
-    private void stringFragment(String title, String inputDefault, String tag){
+    private void stringFragment(String title, String inputDefault, String tag) {
         Bundle bundle = new Bundle();
         bundle.putString(TITLE, title);
         bundle.putString(INPUT_DEFAULT, inputDefault);
@@ -358,6 +649,34 @@ public class ReportProblemActivity extends FragmentActivity {
         ft.addToBackStack(null);
         ft.commit();
     }
+
+    private void dateFragment(Calendar ngayViet, boolean am_pmTag, String tag) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(YEAR, ngayViet.get(Calendar.YEAR));
+        bundle.putInt(MONTH, ngayViet.get(Calendar.MONTH));
+        bundle.putInt(DATE, ngayViet.get(Calendar.DATE));
+        bundle.putBoolean(AM_TAG, am_pmTag);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        DateTimeFragment fragment = new DateTimeFragment();
+        fragment.setArguments(bundle);
+        ft.replace(R.id.flContent, fragment, tag);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    private void ngayXuLyFragment(Calendar ngayXuLy, String tag) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(YEAR, ngayXuLy.get(Calendar.YEAR));
+        bundle.putInt(MONTH, ngayXuLy.get(Calendar.MONTH));
+        bundle.putInt(DATE, ngayXuLy.get(Calendar.DATE));
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        DateFragment fragment = new DateFragment();
+        fragment.setArguments(bundle);
+        ft.replace(R.id.flContent, fragment, tag);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
     @OnClick(R.id.tvBack)
     public void back(View view) {
         if (currentPos > 0) {
@@ -368,6 +687,40 @@ public class ReportProblemActivity extends FragmentActivity {
             return;
         }
         finish();
+    }
+
+    @OnClick(R.id.ivRotateLeft)
+    public void rotateLeft(View view){
+        bitmap = BitmapUtils.rotateBitmap(bitmap, -90);
+        ivProblem.setImageBitmap(bitmap);
+        updateFile();
+    }
+
+    @OnClick(R.id.ivRotateRight)
+    public void rotateRight(View view){
+        bitmap = BitmapUtils.rotateBitmap(bitmap, 90);
+        ivProblem.setImageBitmap(bitmap);
+        updateFile();
+    }
+
+    private void updateFile() {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+        byte[] bitmapdata = bos.toByteArray();
+        try {
+            //create a file to write bitmap data
+            imgFile = new File(getCacheDir(), "tmp.png");
+            imgFile.createNewFile();
+            //write the bytes in file
+            FileOutputStream fos = new FileOutputStream(imgFile);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -381,40 +734,11 @@ public class ReportProblemActivity extends FragmentActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TAKE_PHOTO_CODE && resultCode == Activity.RESULT_OK) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//            fileUri = data.getData();
+            bitmap = (Bitmap) data.getExtras().get("data");
             ivProblem.setImageBitmap(bitmap);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-            byte[] bitmapdata = bos.toByteArray();
-            try {
-                //create a file to write bitmap data
-                imgFile = new File(getCacheDir(), "tmp.png");
-                imgFile.createNewFile();
-                //write the bytes in file
-                FileOutputStream fos = new FileOutputStream(imgFile);
-                fos.write(bitmapdata);
-                fos.flush();
-                fos.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            updateFile();
         }
     }
 
-    public void sendPost(String title, String body) {
-        apiService.savePost(title, body, 1).enqueue(new Callback<Objects>() {
-            @Override
-            public void onResponse(Call<Objects> call, Response<Objects> response) {
-                if (response.isSuccessful()) {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Objects> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
-            }
-        });
-    }
 }

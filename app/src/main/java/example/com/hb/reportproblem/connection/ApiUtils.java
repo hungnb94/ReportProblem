@@ -6,7 +6,7 @@ package example.com.hb.reportproblem.connection;
 
 public class ApiUtils {
 
-    public static final String BASE_URL = "http://jsonplaceholder.typicode.com/";
+    public static final String BASE_URL = "http://192.168.0.103/";
 
     public static APIService getAPIService() {
 

@@ -12,6 +12,8 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginBottom="@dimen/magin_layout"
+            android:gravity="center"
             android:id="@+id/tvTitle"
             android:textSize="@dimen/title_fragment"
             android:layout_width="match_parent"

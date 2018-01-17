@@ -10,11 +10,21 @@ import example.com.hb.reportproblem.R;
 public class SplashActivity extends AppCompatActivity {
     String TAG = "SplashActivity";
     int SPLASH_DISPLAY_LENGTH = 1000;
+//    @BindView(R.id.splashLayout)
+//    RelativeLayout layout;
+//    @BindView(R.id.tvSplash)
+//    TextView textView;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+//        ButterKnife.bind(this);
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
         new Handler().postDelayed(new Runnable() {
@@ -27,4 +37,5 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, SPLASH_DISPLAY_LENGTH);
     }
+
 }

@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import example.com.hb.reportproblem.R;
 
 public class RadioButtonFragment extends Fragment implements IBaseFragment {
-    String TAG="RadioButtonFragment";
+    String TAG = "RadioButtonFragment";
     public static final String LIST = "list";
     public static final String MESSAGE = "message";
     public static final String CURRENT_SELECTED = "current";

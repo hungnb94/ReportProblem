@@ -93,105 +93,105 @@ public class CoolingArea implements INode, ISimpleNode {
         return list;
     }
 
-    private class HeThongTienXuLyNuocThai implements ISimpleNode {
+    public class HeThongTienXuLyNuocThai implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống tiền xử lý nước thải";
         }
     }
 
-    private class UASB implements ISimpleNode {
+    public class UASB implements ISimpleNode {
         @Override
         public String getName() {
             return "UASB";
         }
     }
 
-    private class SBR implements ISimpleNode {
+    public class SBR implements ISimpleNode {
         @Override
         public String getName() {
             return "SBR";
         }
     }
 
-    private class HeThongCacBebun implements ISimpleNode {
+    public class HeThongCacBebun implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống các bể bùn";
         }
     }
 
-    private class StirrerTank implements ISimpleNode {
+    public class StirrerTank implements ISimpleNode {
         @Override
         public String getName() {
             return "stirrer tank";
         }
     }
 
-    private class MBBR implements ISimpleNode {
+    public class MBBR implements ISimpleNode {
         @Override
         public String getName() {
             return "MBBR";
         }
     }
 
-    private class HeThongBeKiKhi implements ISimpleNode {
+    public class HeThongBeKiKhi implements ISimpleNode {
         @Override
         public String getName() {
             return "Hệ thống bể kị khí";
         }
     }
 
-    private class BOPits implements ISimpleNode {
+    public class BOPits implements ISimpleNode {
         @Override
         public String getName() {
             return "BO pits";
         }
     }
 
-    private class AnoxicTank implements ISimpleNode {
+    public class AnoxicTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Anoxic tank";
         }
     }
 
-    private class CoagulationTank implements ISimpleNode {
+    public class CoagulationTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Coagulation tank";
         }
     }
 
-    private class SandFilters implements ISimpleNode {
+    public class SandFilters implements ISimpleNode {
         @Override
         public String getName() {
             return "Sand filters";
         }
     }
 
-    private class SedimentationTank implements ISimpleNode {
+    public class SedimentationTank implements ISimpleNode {
         @Override
         public String getName() {
             return "Sedimentation tank";
         }
     }
 
-    private class ChemicalSystem implements ISimpleNode {
+    public class ChemicalSystem implements ISimpleNode {
         @Override
         public String getName() {
             return "Chemical system";
         }
     }
 
-    private class CacBeDauRa implements ISimpleNode {
+    public class CacBeDauRa implements ISimpleNode {
         @Override
         public String getName() {
             return "Các bể đầu ra";
         }
     }
 
-    private class Biogas implements ISimpleNode {
+    public class Biogas implements ISimpleNode {
         @Override
         public String getName() {
             return "Biogas";

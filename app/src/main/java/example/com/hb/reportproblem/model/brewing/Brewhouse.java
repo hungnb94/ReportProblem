@@ -45,41 +45,8 @@ public class Brewhouse implements INode, ISimpleNode {
         return list;
     }
 
-    public class IntakePit implements INode, ISimpleNode {
-        @Override
-        public String getName() {
-            return "Intake pit";
-        }
-
-        @Override
-        public ArrayList<String> getList() {
-            return null;
-        }
-
-        @Override
-        public ArrayList<INode> getChilds() {
-            return null;
-        }
-    }
-
-    public class MaltStore implements INode, ISimpleNode {
-        @Override
-        public String getName() {
-            return "Malt store";
-        }
-
-        @Override
-        public ArrayList<String> getList() {
-            return null;
-        }
-
-        @Override
-        public ArrayList<INode> getChilds() {
-            return null;
-        }
-    }
-
     public class MillingRoom implements INode, ISimpleNode {
+
         @Override
         public String getName() {
             return "Milling room";
@@ -97,6 +64,7 @@ public class Brewhouse implements INode, ISimpleNode {
     }
 
     public class MashGroup implements INode, ISimpleNode {
+
         @Override
         public String getName() {
             return "Mash group";
@@ -114,6 +82,7 @@ public class Brewhouse implements INode, ISimpleNode {
     }
 
     public class MashFilter implements INode, ISimpleNode {
+
         @Override
         public String getName() {
             return "Mash filter";
@@ -131,6 +100,7 @@ public class Brewhouse implements INode, ISimpleNode {
     }
 
     public class WortGroupCooler implements INode, ISimpleNode {
+
         @Override
         public String getName() {
             return "Wort group & cooler";
