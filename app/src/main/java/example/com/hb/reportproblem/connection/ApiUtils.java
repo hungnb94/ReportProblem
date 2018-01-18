@@ -6,7 +6,8 @@ package example.com.hb.reportproblem.connection;
 
 public class ApiUtils {
 
-    public static final String BASE_URL = "http://192.168.0.103/";
+    public static final String BASE_URL = //"http://reportproblem.epizy.com/";
+            "http://192.168.0.103/";
 
     public static APIService getAPIService() {
 

@@ -1,6 +1,5 @@
 package example.com.hb.reportproblem.fragment;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,7 +30,6 @@ public class RadioButtonFragment extends Fragment implements IBaseFragment {
     @BindView(R.id.tvTitle)
     TextView tvTitle;
 
-    private OnFragmentInteractionListener mListener;
     private RadioButton[] radioButtons;
     private RadioGroup radioGroup;
 
@@ -80,11 +78,6 @@ public class RadioButtonFragment extends Fragment implements IBaseFragment {
         return null;
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
     private void createRadioButton() {
         tvTitle.setText(message);
         int size = 0;
@@ -98,7 +91,7 @@ public class RadioButtonFragment extends Fragment implements IBaseFragment {
             radioGroup.addView(radioButtons[i]);
             String content = list.get(i);
             radioButtons[i].setText(content);
-            if (content.equals(curentSelected))
+            if (content.equals(curentSelected) || i == 0)
                 radioButtons[i].setChecked(true);
         }
         linearLayout.addView(radioGroup);//you add the whole RadioGroup to the layout

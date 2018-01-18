@@ -10,4 +10,6 @@
     <dimen name="size_small">20sp</dimen>
     <dimen name="margin_small">10dp</dimen>
     <dimen name="height_text_main">50dp</dimen>
+    <dimen name="rotate_button">40dp</dimen>
+    <dimen name="footer_height">30dp</dimen>
 </resources>

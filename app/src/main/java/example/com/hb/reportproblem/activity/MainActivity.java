@@ -99,13 +99,11 @@ public class MainActivity extends AppCompatActivity {
     public void reportProblem(View view) {
         Intent intent = new Intent(this, ReportProblemActivity.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @OnClick(R.id.llDownload)
     public void download(View view) {
-//        DownloadFile downloadFile = new DownloadFile(this);
-//        downloadFile.execute();
         if (checkPermission()) {
             startDownload();
         } else {
@@ -169,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(android.R.drawable.stat_sys_download_done)
                 .show();
     }
 

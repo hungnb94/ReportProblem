@@ -40,7 +40,7 @@ public class DownloadService extends IntentService {
 
         notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.download)
-                .setContentTitle("Download")
+                .setContentTitle(getResources().getString(R.string.app_name))
                 .setContentText("Downloading File")
                 .setAutoCancel(true);
         notificationManager.notify(0, notificationBuilder.build());

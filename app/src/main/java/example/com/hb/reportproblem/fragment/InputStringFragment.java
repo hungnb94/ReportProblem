@@ -1,6 +1,5 @@
 package example.com.hb.reportproblem.fragment;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ public class InputStringFragment extends Fragment implements IBaseFragment {
     @BindView(R.id.edtInputString)
     EditText editText;
 
-    private OnFragmentInteractionListener mListener;
 
     public InputStringFragment() {
     }
@@ -61,10 +59,5 @@ public class InputStringFragment extends Fragment implements IBaseFragment {
     @Override
     public String getInputData() {
         return editText.getText().toString();
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

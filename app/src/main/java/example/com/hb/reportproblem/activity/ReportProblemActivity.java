@@ -1,6 +1,8 @@
 package example.com.hb.reportproblem.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -262,16 +264,28 @@ public class ReportProblemActivity extends FragmentActivity {
             public void onResponse(Call<ResponseBody> call,
                                    retrofit2.Response<ResponseBody> response) {
                 try {
-                    String res=response.body().string();
+                    String res = response.body().string();
+                    Log.e(TAG, "Response from add problem: " + res);
                     Gson gson = new Gson();
                     Message message = gson.fromJson(res, Message.class);
-                    if (message.getError()==false){
-                        showToast("Thành công");
-                        finish();
+                    if (message.getError() == false) {
+                        AlertDialog.Builder builder
+                                = new AlertDialog.Builder(ReportProblemActivity.this);
+                        builder.setTitle("Thành công")
+                                .setCancelable(false)
+                                .setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                     } else {
                         showToast("Có lỗi: " + message.getMessage());
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -690,14 +704,14 @@ public class ReportProblemActivity extends FragmentActivity {
     }
 
     @OnClick(R.id.ivRotateLeft)
-    public void rotateLeft(View view){
+    public void rotateLeft(View view) {
         bitmap = BitmapUtils.rotateBitmap(bitmap, -90);
         ivProblem.setImageBitmap(bitmap);
         updateFile();
     }
 
     @OnClick(R.id.ivRotateRight)
-    public void rotateRight(View view){
+    public void rotateRight(View view) {
         bitmap = BitmapUtils.rotateBitmap(bitmap, 90);
         ivProblem.setImageBitmap(bitmap);
         updateFile();

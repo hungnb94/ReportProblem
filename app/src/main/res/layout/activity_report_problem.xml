@@ -29,6 +29,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:background="@drawable/border"
                     android:id="@+id/ivProblem"
                     android:scaleType="fitCenter"
                     android:layout_gravity="center_horizontal"
@@ -44,15 +45,15 @@
                         android:src="@drawable/rotate_right"
                         android:layout_gravity="left"
                         android:id="@+id/ivRotateRight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="@dimen/rotate_button"
+                        android:layout_height="@dimen/rotate_button" />
 
                     <ImageView
                         android:src="@drawable/rotate_left"
                         android:layout_gravity="right"
                         android:id="@+id/ivRotateLeft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="@dimen/rotate_button"
+                        android:layout_height="@dimen/rotate_button" />
 
                 </FrameLayout>
             </LinearLayout>
