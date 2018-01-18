@@ -248,6 +248,17 @@ public class ReportProblemActivity extends FragmentActivity {
                 strTimeline);
         RequestBody bodyWONumber = RequestBody.create(MediaType.parse("text/plain"),
                 strWoNumber);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Gửi dữ liệu");
+        builder.setMessage("Vui lòng chờ");
+        builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
         APIService apiService = ApiUtils.getAPIService();
 //        Call<ResponseBody> call = apiService.newProblem(bodyBoPhan, bodyKhuVucMay, bodyMay,
 //                bodyCumMay, bodyChiTietMay, bodyNguoiVietTag, bodyDangNguyHiem, bodyDangLoi,
@@ -263,6 +274,7 @@ public class ReportProblemActivity extends FragmentActivity {
             @Override
             public void onResponse(Call<ResponseBody> call,
                                    retrofit2.Response<ResponseBody> response) {
+                alertDialog.dismiss();
                 try {
                     String res = response.body().string();
                     Log.e(TAG, "Response from add problem: " + res);
@@ -292,6 +304,7 @@ public class ReportProblemActivity extends FragmentActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                alertDialog.dismiss();
                 showToast("Có lỗi xảy ra: " + t.getMessage());
             }
         });

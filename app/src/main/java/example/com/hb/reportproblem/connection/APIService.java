@@ -16,29 +16,6 @@ import retrofit2.http.Streaming;
 
 public interface APIService {
 
-    @Multipart
-    @POST("/Report/public/problem")
-    Call<ResponseBody> newProblem(@Part("boPhan") RequestBody boPhan,
-                                  @Part("khuVucMay") RequestBody khuVucMay,
-                                  @Part("may") RequestBody may,
-                                  @Part("cumMay") RequestBody cumMay,
-                                  @Part("chiTietMay") RequestBody chiTietMay,
-                                  @Part("nguoiVietTag") RequestBody nguoiVietTag,
-                                  @Part("dangNguyHiem") RequestBody dangNguyHiem,
-                                  @Part("dangLoi") RequestBody dangLoi,
-                                  @Part("dangNguyCo") RequestBody dangNguyCo,
-                                  @Part("moTaChiTiet") RequestBody moTaChiTiet,
-                                  @Part("ngayVietTag") RequestBody ngayVietTag,
-                                  @Part("AMTag") RequestBody AMTag,
-                                  @Part("HQCao") RequestBody HQCao,
-                                  @Part("weekToDo") RequestBody weekToDo,
-                                  @Part("giaiPhapTrietDe") RequestBody giaiPhapTrietDe,
-                                  @Part("ngayXuLy") RequestBody ngayXuLy,
-                                  @Part MultipartBody.Part file);
-
-    @GET("/Report/public/hello")
-    Call<ResponseBody> hello();
-
     @GET("/Report/public/download")
     @Streaming
     Call<ResponseBody> downloadFile();
@@ -71,4 +48,27 @@ public interface APIService {
                                   @Part("timeline") RequestBody timeline,
                                   @Part("WONumber") RequestBody WONumber,
                                   @Part MultipartBody.Part file);
+
+    @Multipart
+    @POST("/Report/public/problem")
+    Call<ResponseBody> newProblem(@Part("boPhan") RequestBody boPhan,
+                                  @Part("khuVucMay") RequestBody khuVucMay,
+                                  @Part("may") RequestBody may,
+                                  @Part("cumMay") RequestBody cumMay,
+                                  @Part("chiTietMay") RequestBody chiTietMay,
+                                  @Part("nguoiVietTag") RequestBody nguoiVietTag,
+                                  @Part("dangNguyHiem") RequestBody dangNguyHiem,
+                                  @Part("dangLoi") RequestBody dangLoi,
+                                  @Part("dangNguyCo") RequestBody dangNguyCo,
+                                  @Part("moTaChiTiet") RequestBody moTaChiTiet,
+                                  @Part("ngayVietTag") RequestBody ngayVietTag,
+                                  @Part("AMTag") RequestBody AMTag,
+                                  @Part("HQCao") RequestBody HQCao,
+                                  @Part("weekToDo") RequestBody weekToDo,
+                                  @Part("giaiPhapTrietDe") RequestBody giaiPhapTrietDe,
+                                  @Part("ngayXuLy") RequestBody ngayXuLy,
+                                  @Part MultipartBody.Part file);
+
+    @GET("/Report/public/hello")
+    Call<ResponseBody> hello();
 }

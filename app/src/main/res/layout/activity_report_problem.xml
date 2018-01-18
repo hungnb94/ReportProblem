@@ -37,7 +37,6 @@
                     android:layout_height="@dimen/height_problem" />
 
                 <FrameLayout
-                    android:layout_margin="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

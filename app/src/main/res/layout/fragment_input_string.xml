@@ -10,7 +10,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginBottom="@dimen/magin_layout"
             android:id="@+id/tvTitleInputString"
             android:gravity="center"
             android:textSize="@dimen/title_fragment"

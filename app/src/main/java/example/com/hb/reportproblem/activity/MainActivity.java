@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -25,7 +26,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URLConnection;
 
 import butterknife.BindView;
@@ -172,19 +173,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFile() {
-        Intent myIntent = new Intent(Intent.ACTION_VIEW);
-        File file = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                "report.xlsx");
-        String mime = null;
         try {
-            mime = URLConnection.guessContentTypeFromStream(new FileInputStream(file));
-        } catch (IOException e) {
+            if (Build.VERSION.SDK_INT >= 24) {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            }
+            Intent myIntent = new Intent(Intent.ACTION_VIEW);
+            File file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    "report.xlsx");
+            String mime = URLConnection.guessContentTypeFromStream(new FileInputStream(file));
+
+            if (mime == null) mime = URLConnection.guessContentTypeFromName(file.getName());
+            myIntent.setDataAndType(Uri.fromFile(file), mime);
+            startActivity(myIntent);
+        } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, "Có lỗi xảy ra: " + e.toString(), LENGTH_LONG).show();
         }
-        if (mime == null) mime = URLConnection.guessContentTypeFromName(file.getName());
-        myIntent.setDataAndType(Uri.fromFile(file), mime);
-        startActivity(myIntent);
     }
 
     public boolean isOnline() {
