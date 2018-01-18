@@ -124,6 +124,9 @@ public class ReportProblemActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_problem);
+        showToast("Chụp ảnh sự cố");
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
         ButterKnife.bind(this);
         for (int i = 0; i < 30; i++)
             listNode.add(new Object());
@@ -754,8 +757,6 @@ public class ReportProblemActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         if (imgFile == null) {
-            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
         }
     }
 
@@ -765,6 +766,8 @@ public class ReportProblemActivity extends FragmentActivity {
             bitmap = (Bitmap) data.getExtras().get("data");
             ivProblem.setImageBitmap(bitmap);
             updateFile();
+        } else {
+            finish();
         }
     }
 

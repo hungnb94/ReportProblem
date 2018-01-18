@@ -3,6 +3,7 @@ package example.com.hb.reportproblem.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -187,9 +188,14 @@ public class MainActivity extends AppCompatActivity {
             if (mime == null) mime = URLConnection.guessContentTypeFromName(file.getName());
             myIntent.setDataAndType(Uri.fromFile(file), mime);
             startActivity(myIntent);
-        } catch (Exception e) {
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Có lỗi xảy ra! " +
+                            "Bạn nên cài ứng dụng đọc file excel rồi thử lại",
+                    LENGTH_LONG).show();
+        } catch (Exception e){
             e.printStackTrace();
-            Toast.makeText(this, "Có lỗi xảy ra: " + e.toString(), LENGTH_LONG).show();
+            Toast.makeText(this, "Có lỗi xảy ra: " + e.toString(),
+                    LENGTH_LONG).show();
         }
     }
 
