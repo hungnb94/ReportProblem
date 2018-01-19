@@ -37,8 +37,6 @@ import example.com.hb.reportproblem.fragment.DateFragment;
 import example.com.hb.reportproblem.fragment.DateTimeFragment;
 import example.com.hb.reportproblem.fragment.InputStringFragment;
 import example.com.hb.reportproblem.fragment.RadioButtonFragment;
-import example.com.hb.reportproblem.model.Brewing;
-import example.com.hb.reportproblem.model.CumMay;
 import example.com.hb.reportproblem.model.DangLoiAM;
 import example.com.hb.reportproblem.model.DangNguyCo;
 import example.com.hb.reportproblem.model.DangNguyHiem;
@@ -47,9 +45,10 @@ import example.com.hb.reportproblem.model.INode;
 import example.com.hb.reportproblem.model.ISimpleNode;
 import example.com.hb.reportproblem.model.Logistic;
 import example.com.hb.reportproblem.model.NguoiVietTag;
-import example.com.hb.reportproblem.model.Packaging;
-import example.com.hb.reportproblem.model.Utility;
+import example.com.hb.reportproblem.model.brewing.Brewing;
+import example.com.hb.reportproblem.model.packaging.Packaging;
 import example.com.hb.reportproblem.model.response.Message;
+import example.com.hb.reportproblem.model.utility.Utility;
 import example.com.hb.reportproblem.utils.BitmapUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -544,11 +543,22 @@ public class ReportProblemActivity extends FragmentActivity {
                     strMay = inputData;
                     maxPos = currentPos;
                 }
-                CumMay cumMay = new CumMay();
-                ArrayList<String> list = cumMay.getList();
-                currentNode = cumMay;
-                listNode.set(currentPos, inputData);
-                radioFragment(list, cumMay.getName(), strCumMay, FRAGMENT_04TH);
+                ArrayList<String> list = null;
+                try {
+                    INode node = (INode) listNode.get(currentPos - 1);
+                    for (Object object : node.getChilds()) {
+                        ISimpleNode simpleNode = (ISimpleNode) object;
+                        if (inputData.equals(simpleNode.getName())) {
+                            currentNode = simpleNode;
+                            list = ((INode) currentNode).getList();
+                            listNode.set(currentPos, currentNode);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                radioFragment(list, getResources().getString(R.string.cum_may),
+                        strCumMay, FRAGMENT_04TH);
             } else {
                 showToast(getResources().getString(R.string.chon_mot));
             }
@@ -579,6 +589,7 @@ public class ReportProblemActivity extends FragmentActivity {
                         }
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 radioFragment(list, "Máy", strMay, THIRD_FRAGMENT);
             } else {

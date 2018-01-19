@@ -1,11 +1,12 @@
-package example.com.hb.reportproblem.model;
+package example.com.hb.reportproblem.model.packaging;
 
 import java.util.ArrayList;
 
-import example.com.hb.reportproblem.model.packaging.BottlingLine;
-import example.com.hb.reportproblem.model.packaging.CanningLine2;
-import example.com.hb.reportproblem.model.packaging.KeggingLine;
-import example.com.hb.reportproblem.model.packaging.OtherPKG;
+import example.com.hb.reportproblem.model.INode;
+import example.com.hb.reportproblem.model.ISimpleNode;
+import example.com.hb.reportproblem.model.packaging.bottling_line.BottlingLine;
+import example.com.hb.reportproblem.model.packaging.canning_line_2.CanningLine2;
+import example.com.hb.reportproblem.model.packaging.kegging_line.KeggingLine;
 
 /**
  * Created by HP ProBook on 1/9/2018.

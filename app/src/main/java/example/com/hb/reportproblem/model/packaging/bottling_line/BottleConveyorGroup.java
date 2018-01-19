@@ -1,15 +1,16 @@
-package example.com.hb.reportproblem.model;
+package example.com.hb.reportproblem.model.packaging.bottling_line;
 
 import java.util.ArrayList;
 
-import example.com.hb.reportproblem.model.packaging.BottlingLine;
+import example.com.hb.reportproblem.model.INode;
+import example.com.hb.reportproblem.model.ISimpleNode;
 
 /**
- * Created by hung on 1/12/2018.
+ * Created by hung on 1/19/2018.
  */
 
-public class CumMay implements INode, ISimpleNode {
-    BottlingLine.BottleConveyorGroup bottleConveyorGroup = new BottlingLine.BottleConveyorGroup();
+public class BottleConveyorGroup implements INode, ISimpleNode {
+    BottleConveyorGroupChild bottleConveyorGroup = new BottleConveyorGroupChild();
     BangTaiBanChai bangTaiBanChai = new BangTaiBanChai();
     BangTaiCrate bangTaiCrate = new BangTaiCrate();
     BangTaiConLan bangTaiConLan = new BangTaiConLan();
@@ -21,7 +22,7 @@ public class CumMay implements INode, ISimpleNode {
 
     @Override
     public String getName() {
-        return "Cụm Máy";
+        return "Bottle Conveyor Group";
     }
 
     @Override
@@ -53,7 +54,24 @@ public class CumMay implements INode, ISimpleNode {
         list.add(heThongSensorBangTai);
         return list;
     }
+    public class BottleConveyorGroupChild implements INode, ISimpleNode {
 
+        @Override
+        public String getName() {
+            return "Bottle Conveyor Group";
+        }
+
+        @Override
+        public ArrayList<String> getList() {
+            return null;
+        }
+
+        @Override
+        public ArrayList<INode> getChilds() {
+            return null;
+        }
+
+    }
     public static class BangTaiBanChai implements INode, ISimpleNode {
         @Override
         public String getName() {

@@ -1,4 +1,4 @@
-package example.com.hb.reportproblem.model.brewing;
+package example.com.hb.reportproblem.model.packaging.kegging_line;
 
 import java.util.ArrayList;
 
@@ -6,27 +6,25 @@ import example.com.hb.reportproblem.model.INode;
 import example.com.hb.reportproblem.model.ISimpleNode;
 
 /**
- * Created by hung on 1/12/2018.
+ * Created by hung on 1/19/2018.
  */
 
-public class IntakePit implements INode, ISimpleNode {
-//    Intake pit
-//    Intake pit malt
-//    Intake pit rice
-//    Dust filter to bins
+public class KegInjetCoder implements INode, ISimpleNode {
+//    Keg - Injet Coder
+//    Đầu phun mực
+//    Tủ điều khiển
 
     @Override
     public String getName() {
-        return "Intake pit";
+        return "Keg - Injet Coder";
     }
 
     @Override
     public ArrayList<String> getList() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("Intake pit");
-        list.add("Intake pit malt");
-        list.add("Intake pit rice");
-        list.add("Dust filter to bins");
+        list.add("Keg - Injet Coder");
+        list.add("Đầu phun mực");
+        list.add("Tủ điều khiển");
         return list;
     }
 
@@ -34,5 +32,4 @@ public class IntakePit implements INode, ISimpleNode {
     public ArrayList<INode> getChilds() {
         return null;
     }
-
 }

@@ -1,11 +1,9 @@
-package example.com.hb.reportproblem.model;
+package example.com.hb.reportproblem.model.brewing;
 
 import java.util.ArrayList;
 
-import example.com.hb.reportproblem.model.brewing.Brewhouse;
-import example.com.hb.reportproblem.model.brewing.CIPAndService;
-import example.com.hb.reportproblem.model.brewing.Cellar;
-import example.com.hb.reportproblem.model.brewing.Filltration;
+import example.com.hb.reportproblem.model.INode;
+import example.com.hb.reportproblem.model.ISimpleNode;
 
 /**
  * Created by HP ProBook on 1/9/2018.

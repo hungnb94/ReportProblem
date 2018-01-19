@@ -1,14 +1,9 @@
-package example.com.hb.reportproblem.model;
+package example.com.hb.reportproblem.model.utility;
 
 import java.util.ArrayList;
 
-import example.com.hb.reportproblem.model.utility.AirPlant;
-import example.com.hb.reportproblem.model.utility.BoilerArea;
-import example.com.hb.reportproblem.model.utility.CO2Area;
-import example.com.hb.reportproblem.model.utility.CoolingArea;
-import example.com.hb.reportproblem.model.utility.GenerationArea;
-import example.com.hb.reportproblem.model.utility.WTPArea;
-import example.com.hb.reportproblem.model.utility.WWTPArea;
+import example.com.hb.reportproblem.model.INode;
+import example.com.hb.reportproblem.model.ISimpleNode;
 
 /**
  * Created by HP ProBook on 1/9/2018.

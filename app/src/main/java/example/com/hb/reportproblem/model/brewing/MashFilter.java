@@ -6,27 +6,29 @@ import example.com.hb.reportproblem.model.INode;
 import example.com.hb.reportproblem.model.ISimpleNode;
 
 /**
- * Created by hung on 1/12/2018.
+ * Created by hung on 1/19/2018.
  */
 
-public class IntakePit implements INode, ISimpleNode {
-//    Intake pit
-//    Intake pit malt
-//    Intake pit rice
-//    Dust filter to bins
+public class MashFilter implements INode, ISimpleNode {
+//    Mash filter
+//    Sparge water tank
+//    Mash filter CIP plant
+//    Spent grains hopper
+//    Spent grains silo
 
     @Override
     public String getName() {
-        return "Intake pit";
+        return "Mash filter";
     }
 
     @Override
     public ArrayList<String> getList() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("Intake pit");
-        list.add("Intake pit malt");
-        list.add("Intake pit rice");
-        list.add("Dust filter to bins");
+        list.add("Mash filter");
+        list.add("Sparge water tank");
+        list.add("Mash filter CIP plant");
+        list.add("Spent grains hopper");
+        list.add("Spent grains silo");
         return list;
     }
 
@@ -34,5 +36,5 @@ public class IntakePit implements INode, ISimpleNode {
     public ArrayList<INode> getChilds() {
         return null;
     }
-
 }
+

@@ -1,4 +1,4 @@
-package example.com.hb.reportproblem.model.packaging;
+package example.com.hb.reportproblem.model.packaging.kegging_line;
 
 import java.util.ArrayList;
 
@@ -47,54 +47,5 @@ public class KeggingLine implements INode, ISimpleNode {
         list.add(kegRollerConveyor);
         list.add(kegInjetCoder);
         return list;
-    }
-
-    public class KegCIPGroup implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg CIP Group";
-        }
-    }
-
-    public class KegWasherFiller implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg - Washer/Filler";
-        }
-    }
-
-    public class KegFlashPasteurizer implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg - Flash Pasteurizer";
-        }
-    }
-
-    public class KegWeigherGroup implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg - Weigher Group";
-        }
-    }
-
-    public class KegChainConveyor implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg - Chain Conveyor (Empty Keg)";
-        }
-    }
-
-    public class KegRollerConveyor implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg - Roller Conveyor (Full Keg)";
-        }
-    }
-
-    public class KegInjetCoder implements ISimpleNode {
-        @Override
-        public String getName() {
-            return "Keg - Injet Coder";
-        }
     }
 }

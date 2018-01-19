@@ -5,4 +5,8 @@
     <string name="bo_phan">Bộ phận</string>
     <string name="khu_vuc_may">Khu vực máy</string>
     <string name="chon_mot">Bạn phải chọn 1</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cum_may">Cụm máy</string>
 </resources>

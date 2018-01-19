@@ -12,6 +12,7 @@ import example.com.hb.reportproblem.model.ISimpleNode;
 public class Cellar implements INode, ISimpleNode {
     HorapTanks horapTanks = new HorapTanks();
     FST fst = new FST();
+    // TODO: Thêm các object khác cho đủ bộ
     YSTAndYPT ystAndYPT = new YSTAndYPT();
     WortLine wortLine = new WortLine();
     YeastTransferLine yeastTransferLine = new YeastTransferLine();
@@ -44,40 +45,6 @@ public class Cellar implements INode, ISimpleNode {
         list.add(yeastTransferLine);
         list.add(gbTransferLine);
         return list;
-    }
-
-    public class HorapTanks implements INode, ISimpleNode {
-        @Override
-        public String getName() {
-            return "Horap tanks";
-        }
-
-        @Override
-        public ArrayList<String> getList() {
-            return null;
-        }
-
-        @Override
-        public ArrayList<INode> getChilds() {
-            return null;
-        }
-    }
-
-    public class FST implements INode, ISimpleNode {
-        @Override
-        public String getName() {
-            return "FST";
-        }
-
-        @Override
-        public ArrayList<String> getList() {
-            return null;
-        }
-
-        @Override
-        public ArrayList<INode> getChilds() {
-            return null;
-        }
     }
 
     public class YSTAndYPT implements INode, ISimpleNode {
