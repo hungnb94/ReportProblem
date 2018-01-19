@@ -20,7 +20,6 @@ public class DateFragment extends Fragment {
     public static final String YEAR = "year";
     public static final String MONTH = "month";
     public static final String DATE = "date";
-    public static final String AM_TAG = "amTag";
     Calendar calendar = Calendar.getInstance();
     int date, month, year;
     View view;

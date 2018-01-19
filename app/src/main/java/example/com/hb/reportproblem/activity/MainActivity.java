@@ -22,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -106,6 +107,36 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.llDownload)
     public void download(View view) {
+        reviewDownload();
+    }
+
+    private void reviewDownload() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(this);
+        alert.setMessage("Passcode");
+        alert.setTitle("Enter Passcode");
+        alert.setView(edittext);
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String passcode = edittext.getText().toString();
+                if (passcode.equals("9999"))
+                    download();
+                else
+                    Toast.makeText(MainActivity.this,
+                            "Passcode không đúng. Bạn không có quyền tải báo cáo",
+                            LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
+    }
+
+    private void download() {
         if (checkPermission()) {
             startDownload();
         } else {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class DangNguyHiem implements INode, ISimpleNode {
+    public static final String KHONG_CO_NGUY_CO = "Không Có Nguy Cơ";
     @Override
     public ArrayList<String> getList() {
         ArrayList<String> list = new ArrayList<>();
@@ -14,7 +15,7 @@ public class DangNguyHiem implements INode, ISimpleNode {
         list.add("Unsafe Action");
         list.add("Nearmiss personel");
         list.add("Nearmiss contractor");
-        list.add("Không Có Nguy Cơ");
+        list.add(KHONG_CO_NGUY_CO);
         return list;
     }
 

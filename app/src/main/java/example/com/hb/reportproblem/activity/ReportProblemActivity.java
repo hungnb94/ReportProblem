@@ -36,11 +36,11 @@ import example.com.hb.reportproblem.connection.ApiUtils;
 import example.com.hb.reportproblem.fragment.DateFragment;
 import example.com.hb.reportproblem.fragment.DateTimeFragment;
 import example.com.hb.reportproblem.fragment.InputStringFragment;
+import example.com.hb.reportproblem.fragment.MotaFragment;
 import example.com.hb.reportproblem.fragment.RadioButtonFragment;
 import example.com.hb.reportproblem.model.DangLoiAM;
 import example.com.hb.reportproblem.model.DangNguyCo;
 import example.com.hb.reportproblem.model.DangNguyHiem;
-import example.com.hb.reportproblem.model.HQState;
 import example.com.hb.reportproblem.model.INode;
 import example.com.hb.reportproblem.model.ISimpleNode;
 import example.com.hb.reportproblem.model.Logistic;
@@ -63,6 +63,7 @@ import static example.com.hb.reportproblem.fragment.DateTimeFragment.MONTH;
 import static example.com.hb.reportproblem.fragment.DateTimeFragment.YEAR;
 import static example.com.hb.reportproblem.fragment.InputStringFragment.INPUT_DEFAULT;
 import static example.com.hb.reportproblem.fragment.InputStringFragment.TITLE;
+import static example.com.hb.reportproblem.fragment.MotaFragment.MO_TA_CHI_TIET;
 import static example.com.hb.reportproblem.fragment.RadioButtonFragment.CURRENT_SELECTED;
 import static example.com.hb.reportproblem.fragment.RadioButtonFragment.LIST;
 import static example.com.hb.reportproblem.fragment.RadioButtonFragment.MESSAGE;
@@ -165,21 +166,6 @@ public class ReportProblemActivity extends FragmentActivity {
             case 9:
                 fragment_10th();
                 break;
-            case 10:
-                fragment_11th();
-                break;
-            case 11:
-                fragment_12th();
-                break;
-            case 12:
-                fragment_13th();
-                break;
-            case 13:
-                fragment_14th();
-                break;
-            case 14:
-                fragment_15th();
-                break;
             default:
                 sendData();
                 break;
@@ -211,6 +197,21 @@ public class ReportProblemActivity extends FragmentActivity {
                 strDangLoi);
         RequestBody bodyDangNguyCo = RequestBody.create(MediaType.parse("text/plain"),
                 strDangNguyCo);
+        MotaFragment prevFragment = (MotaFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_10TH);
+        if (prevFragment != null && prevFragment.isVisible()) {
+            strMoTaChiTiet = prevFragment.getMoTaChiTiet();
+            ngayViet = prevFragment.getNgayViet();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            strNgayViet = sdf.format(ngayViet.getTime());
+            am_pmTag = prevFragment.getAMTag();
+            hqCaoThap = prevFragment.getHQState();
+            Log.e(TAG, "Input 10: Mô tả: " + strMoTaChiTiet
+                    + "\nNgày viết: " + strNgayViet
+                    + "\n AM Tag: " + am_pmTag
+                    + "\n HQ: " + hqCaoThap);
+            currentPos = 11;
+        }
         RequestBody bodyMoTaChiTiet = RequestBody.create(MediaType.parse("text/plain"),
                 strMoTaChiTiet);
         RequestBody bodyNgayVietTag = RequestBody.create(MediaType.parse("text/plain"),
@@ -226,11 +227,14 @@ public class ReportProblemActivity extends FragmentActivity {
         RequestBody bodySoNgayTonDong = RequestBody.create(MediaType.parse("text/plain"),
                 strSoNgayTonDong);
 
-        DateFragment prevFragment = (DateFragment) getSupportFragmentManager()
-                .findFragmentByTag(FRAGMENT_15TH);
-        ngayThucTeXuLy = prevFragment.getCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        strNgayXuLy = sdf.format(ngayThucTeXuLy.getTime());
+//        DateFragment prevFragment = (DateFragment) getSupportFragmentManager()
+//                .findFragmentByTag(FRAGMENT_13TH);
+//        if (prevFragment != null && prevFragment.isVisible()) {
+//            ngayThucTeXuLy = prevFragment.getCalendar();
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            strNgayXuLy = sdf.format(ngayThucTeXuLy.getTime());
+//            Log.e(TAG, "Ngay xu ly: " + strNgayXuLy);
+//        }
         RequestBody bodyNgayXuLy = RequestBody.create(MediaType.parse("text/plain"),
                 strNgayXuLy);
 
@@ -310,87 +314,110 @@ public class ReportProblemActivity extends FragmentActivity {
                 showToast("Có lỗi xảy ra: " + t.getMessage());
             }
         });
+        logData();
     }
 
-    private void fragment_15th() {
+    private void logData() {
+        Log.e(TAG, "All input to send:");
+        Log.e(TAG, "Bo phan: "+strBoPhan);
+        Log.e(TAG, "Khu vuc may: "+strKhuVucMay);
+        Log.e(TAG, "May: "+strMay);
+        Log.e(TAG, "Cum may: "+strCumMay);
+        Log.e(TAG, "Chi tiet may: "+strChiTietMay);
+        Log.e(TAG, "Nguoi viet: "+strNguoiViet);
+        Log.e(TAG, "Dang nguy hiem: "+strDangNguyHiem);
+        Log.e(TAG, "Dang loi: "+strDangLoi);
+        Log.e(TAG, "Dang nguy co: "+strDangNguyCo);
+        Log.e(TAG, "Mo ta chi tiet: "+strMoTaChiTiet);
+        Log.e(TAG, "Ngay viet: "+strNgayViet);
+        Log.e(TAG, "AM TAG: "+String.valueOf(am_pmTag));
+        Log.e(TAG, "HQ: "+String.valueOf(hqCaoThap));
+        Log.e(TAG, "Week to do: "+strWeekToDo);
+        Log.e(TAG, "Giai phap: "+strGiaiPhap);
+        Log.e(TAG, "Ngay xu ly: "+strNgayXuLy);
+    }
+
+    private void fragmentNgayXuLy() {
         InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
-                .findFragmentByTag(FRAGMENT_14TH);
-        if (prevFragment != null && prevFragment.isVisible()) {
-            strGiaiPhap = prevFragment.getInputData();
-            currentPos = 15;
-            ngayXuLyFragment(ngayThucTeXuLy, FRAGMENT_15TH);
-        }
-    }
-
-    private void fragment_14th() {
-        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
-                .findFragmentByTag(FRAGMENT_13TH);
-        if (prevFragment != null && prevFragment.isVisible()) {
-            strWeekToDo = prevFragment.getInputData();
-            currentPos = 14;
-            stringFragment("Giải Pháp Xử Lý Triệt Để", strGiaiPhap, FRAGMENT_14TH);
-        }
-    }
-
-    private void fragment_13th() {
-        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAGMENT_12TH);
         if (prevFragment != null && prevFragment.isVisible()) {
-            String hqType = prevFragment.getInputData();
-            if (hqType != null) {
-                Log.e(TAG, "Input 12: " + hqType);
-                if (hqType.equals(HQState.HQ_CAO))
-                    hqCaoThap = true;
-                else
-                    hqCaoThap = false;
-                currentPos = 13;
-                stringFragment("Week to do", strWeekToDo, FRAGMENT_13TH);
-            } else {
-                showToast(getResources().getString(R.string.chon_mot));
-            }
+            strGiaiPhap = prevFragment.getInputData();
+            Log.e(TAG, "Input 12: " + strGiaiPhap);
+            currentPos = 13;
+            ngayXuLyFragment(ngayThucTeXuLy, FRAGMENT_13TH);
         }
     }
 
-    private void fragment_12th() {
-        DateTimeFragment prevFragment = (DateTimeFragment) getSupportFragmentManager()
+    private void fragmentGiaiPhap() {
+        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAGMENT_11TH);
         if (prevFragment != null && prevFragment.isVisible()) {
-            ngayViet = prevFragment.getCalendar();
-            Log.e(TAG, "Input 11: " + ngayViet.getTime());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            strNgayViet = sdf.format(ngayViet.getTime());
-            Boolean amTag = prevFragment.getAmPmTag();
-            if (amTag != null) {
-                currentPos = 12;
-                am_pmTag = amTag;
-                String currentSelected = (hqCaoThap ? HQState.HQ_CAO : HQState.HQ_THAP);
-                HQState hqState = new HQState();
-                radioFragment(hqState.getList(), hqState.getName(),
-                        currentSelected, FRAGMENT_12TH);
-            } else {
-                showToast(getResources().getString(R.string.chon_mot));
-            }
+            strWeekToDo = prevFragment.getInputData();
+            Log.e(TAG, "Input 11: " + strWeekToDo);
+            currentPos = 12;
+            stringFragment("Giải Pháp Xử Lý Triệt Để", strGiaiPhap, FRAGMENT_12TH);
         }
     }
 
-    private void fragment_11th() {
-        InputStringFragment prevFragment = (InputStringFragment) getSupportFragmentManager()
-                .findFragmentByTag(FRAGMENT_10TH);
-        if (prevFragment != null && prevFragment.isVisible()) {
-            String inputData = prevFragment.getInputData();
-            if (inputData != null) {
-                Log.e(TAG, "Input 10: " + inputData);
-                currentPos = 11;
-                if (!inputData.equals(strMoTaChiTiet)) {
-                    strMoTaChiTiet = inputData;
-                    maxPos = currentPos;
-                }
-                currentNode = inputData;
-                listNode.set(currentPos, inputData);
-                dateFragment(ngayViet, am_pmTag, FRAGMENT_11TH);
-            }
-        }
-    }
+//    private void fragment_13th() {
+//        RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
+//                .findFragmentByTag(FRAGMENT_12TH);
+//        if (prevFragment != null && prevFragment.isVisible()) {
+//            String hqType = prevFragment.getInputData();
+//            if (hqType != null) {
+//                Log.e(TAG, "Input 12: " + hqType);
+//                if (hqType.equals(HQState.HQ_CAO))
+//                    hqCaoThap = true;
+//                else
+//                    hqCaoThap = false;
+//                currentPos = 13;
+//                stringFragment("Week to do", strWeekToDo, FRAGMENT_13TH);
+//            } else {
+//                showToast(getResources().getString(R.string.chon_mot));
+//            }
+//        }
+//    }
+
+//    private void fragment_12th() {
+//        DateTimeFragment prevFragment = (DateTimeFragment) getSupportFragmentManager()
+//                .findFragmentByTag(FRAGMENT_11TH);
+//        if (prevFragment != null && prevFragment.isVisible()) {
+//            ngayViet = prevFragment.getCalendar();
+//            Log.e(TAG, "Input 11: " + ngayViet.getTime());
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            strNgayViet = sdf.format(ngayViet.getTime());
+//            Boolean amTag = prevFragment.getAmPmTag();
+//            if (amTag != null) {
+//                currentPos = 12;
+//                am_pmTag = amTag;
+//                String currentSelected = (hqCaoThap ? HQState.HQ_CAO : HQState.HQ_THAP);
+//                HQState hqState = new HQState();
+//                radioFragment(hqState.getList(), hqState.getName(),
+//                        currentSelected, FRAGMENT_12TH);
+//            } else {
+//                showToast(getResources().getString(R.string.chon_mot));
+//            }
+//        }
+//    }
+
+//    private void fragment_11th() {
+//        MotaFragment prevFragment = (MotaFragment) getSupportFragmentManager()
+//                .findFragmentByTag(FRAGMENT_10TH);
+//        if (prevFragment != null && prevFragment.isVisible()) {
+//            strMoTaChiTiet = prevFragment.getMoTaChiTiet();
+//            ngayViet = prevFragment.getNgayViet();
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            strNgayViet = sdf.format(ngayViet.getTime());
+//            am_pmTag = prevFragment.getAMTag();
+//            hqCaoThap = prevFragment.getHQState();
+//            Log.e(TAG, "Input 10: Mô tả: " + strMoTaChiTiet
+//                    + "\nNgày viết: " + strNgayViet
+//                    + "\n AM Tag: " + am_pmTag
+//                    + "\n HQ: " + hqCaoThap);
+//            currentPos = 11;
+//            stringFragment("Week to do", strWeekToDo, FRAGMENT_11TH);
+//        }
+//    }
 
     private void fragment_10th() {
         RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
@@ -400,13 +427,13 @@ public class ReportProblemActivity extends FragmentActivity {
             if (inputData != null) {
                 Log.e(TAG, "Input 9: " + inputData);
                 currentPos = 10;
-                if (!inputData.equals(strDangNguyCo)) {
-                    strDangNguyCo = inputData;
+                if (!inputData.equals(strDangLoi)) {
+                    strDangLoi = inputData;
                     maxPos = currentPos;
                 }
                 currentNode = inputData;
                 listNode.set(currentPos, inputData);
-                stringFragment("Mô Tả Chi Tiết Vấn Đề", strMoTaChiTiet, FRAGMENT_10TH);
+                motaFragment(FRAGMENT_10TH);
             } else {
                 showToast(getResources().getString(R.string.chon_mot));
             }
@@ -414,6 +441,13 @@ public class ReportProblemActivity extends FragmentActivity {
     }
 
     private void fragment_9th() {
+        if (strDangNguyHiem.equals(DangNguyHiem.KHONG_CO_NGUY_CO)){
+            Log.e(TAG, "Chuyển fragment 9 do không có nguy cơ");
+            DangLoiAM dangLoiAM = new DangLoiAM();
+            ArrayList<String> list = dangLoiAM.getList();
+            radioFragment(list, dangLoiAM.getName(), strDangLoi, FRAGMENT_09TH);
+            return;
+        }
         RadioButtonFragment prevFragment = (RadioButtonFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAGMENT_08TH);
         if (prevFragment != null && prevFragment.isVisible()) {
@@ -421,15 +455,15 @@ public class ReportProblemActivity extends FragmentActivity {
             if (inputData != null) {
                 Log.e(TAG, "Input 8: " + inputData);
                 currentPos = 9;
-                if (!inputData.equals(strDangLoi)) {
-                    strDangLoi = inputData;
+                if (!inputData.equals(strDangNguyCo)) {
+                    strDangNguyCo = inputData;
                     maxPos = currentPos;
                 }
-                DangNguyCo dangNguyCo = new DangNguyCo();
-                ArrayList<String> list = dangNguyCo.getList();
-                currentNode = dangNguyCo;
-                listNode.set(currentPos, dangNguyCo);
-                radioFragment(list, dangNguyCo.getName(), strDangNguyCo, FRAGMENT_09TH);
+                DangLoiAM dangLoiAM = new DangLoiAM();
+                ArrayList<String> list = dangLoiAM.getList();
+                currentNode = dangLoiAM;
+                listNode.set(currentPos, dangLoiAM);
+                radioFragment(list, dangLoiAM.getName(), strDangLoi, FRAGMENT_09TH);
             } else {
                 showToast(getResources().getString(R.string.chon_mot));
             }
@@ -448,11 +482,17 @@ public class ReportProblemActivity extends FragmentActivity {
                     strDangNguyHiem = inputData;
                     maxPos = currentPos;
                 }
-                DangLoiAM dangLoiAM = new DangLoiAM();
-                ArrayList<String> list = dangLoiAM.getList();
-                currentNode = dangLoiAM;
-                listNode.set(currentPos, dangLoiAM);
-                radioFragment(list, dangLoiAM.getName(), strDangLoi, FRAGMENT_08TH);
+                if (strDangNguyHiem.equals(DangNguyHiem.KHONG_CO_NGUY_CO)){
+                    Log.e(TAG, "Không có nguy cơ nên nhảy sang fragment sau");
+                    currentPos=9;
+                    fragment_9th();
+                } else {
+                    DangNguyCo dangNguyCo = new DangNguyCo();
+                    ArrayList<String> list = dangNguyCo.getList();
+                    currentNode = dangNguyCo;
+                    listNode.set(currentPos, dangNguyCo);
+                    radioFragment(list, dangNguyCo.getName(), strDangNguyCo, FRAGMENT_08TH);
+                }
             } else {
                 showToast(getResources().getString(R.string.chon_mot));
             }
@@ -718,9 +758,27 @@ public class ReportProblemActivity extends FragmentActivity {
         ft.commit();
     }
 
+    private void motaFragment(String tag) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MO_TA_CHI_TIET, strMoTaChiTiet);
+        bundle.putInt(MotaFragment.YEAR, ngayViet.get(Calendar.YEAR));
+        bundle.putInt(MotaFragment.MONTH, ngayViet.get(Calendar.MONTH));
+        bundle.putInt(MotaFragment.DATE, ngayViet.get(Calendar.DATE));
+        bundle.putBoolean(MotaFragment.AM_TAG, am_pmTag);
+        bundle.putBoolean(MotaFragment.HQ_CAO, hqCaoThap);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        MotaFragment fragment = new MotaFragment();
+        fragment.setArguments(bundle);
+        ft.replace(R.id.flContent, fragment, tag);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
     @OnClick(R.id.tvBack)
     public void back(View view) {
         if (currentPos > 0) {
+            if (currentPos==8 && strDangNguyHiem.equals(DangNguyHiem.KHONG_CO_NGUY_CO))
+                currentPos--;
             currentPos--;
             getSupportFragmentManager().popBackStack();
             if (currentPos == 0)

@@ -12,4 +12,5 @@
     <dimen name="height_text_main">50dp</dimen>
     <dimen name="rotate_button">40dp</dimen>
     <dimen name="footer_height">30dp</dimen>
+    <dimen name="height_devide">5dp</dimen>
 </resources>
